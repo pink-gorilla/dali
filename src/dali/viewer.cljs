@@ -12,9 +12,7 @@
       (p/then (fn [transform]
                 (info "transform-fn resolve success. Now transforming.")
                 (info "transform: " transform)
-                (let [r (transform data)]
-                  (info "data successfully transformed to:  " r)
-                  r)))))
+                (transform data)))))
 
 
 (defn process [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
@@ -23,6 +21,7 @@
       (-> (p/all [viewer-p
                   (transform-data transform-fn data)])
           (p/then (fn [[viewer data]]
+                    (info "data successfully transformed to:  " data)
                     {:viewer viewer
                      :data data})))
       (-> viewer-p
@@ -54,18 +53,7 @@
 
 (defn viewer-impl [dali-spec]
   (let [[result set-result] (react/useState nil)
-        [error set-error] (react/useState false)
-        ui  (r/as-element
-            (cond
-              result
-              (let [{:keys [viewer data error]} result]
-                (if data
-                  [viewer data]
-                  [:p "error!"]))
-              error
-              [:p "error!"]
-              :else
-              [:p "loading.."]))]
+        [error set-error] (react/useState false)]
     (react/useEffect
      (fn []
        (set-result nil)
@@ -80,15 +68,23 @@
                        (set-error err))))
        (fn []
          (println "processing cleanup ..")))
-     (clj->js [dali-spec]))
+      #js [dali-spec])
     
     (react/useMemo 
      (fn []
-       ui
+      (r/as-element
+       (cond
+         result
+         (let [{:keys [viewer data error]} result]
+           (if data
+             [viewer data]
+             [:p "error!"]))
+         error
+         [:p "error!"]
+         :else
+         [:p "loading.."]))
        )
-     (clj->js [ui]))
-    
-   ))
+     #js [result])))
 
 (defn viewer2 [dali-spec]
   [:f> viewer-impl dali-spec])
