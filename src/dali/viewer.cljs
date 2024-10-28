@@ -80,7 +80,9 @@
       :else
       [:p "loading.."])))
 
+(defn viewer-memoized [dali-spec]
+  (react/useMemo viewer-impl (clj->js [dali-spec])))
 
 (defn viewer2 [dali-spec]
-  [:f> viewer-impl dali-spec])
+  [:f> viewer-memoized dali-spec])
 
