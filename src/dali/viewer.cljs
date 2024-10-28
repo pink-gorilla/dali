@@ -57,30 +57,28 @@
         [error set-error] (react/useState false)]
     (react/useEffect
      (fn []
-       (let [ignore (atom false)]
-         (set-result nil)
-         (println "processing dali-spec..")
-         (->  (process dali-spec)
-              (p/then (fn [result]
-                        (println "processing dali-spec success!")
-                        (when-not @ignore
-                          (set-result result))))
-              (p/catch (fn [err]
-                         (println "processing dali-spec error!")
-                         (set-error err))))
-         (fn []
-           (reset! ignore true))))
+       (set-result nil)
+       (println "processing dali-spec..")
+       (->  (process dali-spec)
+            (p/then (fn [result]
+                      (println "processing dali-spec success!")
+                      (set-result result)))
+            (p/catch (fn [err]
+                       (println "processing dali-spec error!")
+                       (set-error err))))
+       (fn []
+         (println "processing cleanup ..")))
      (clj->js [dali-spec]))
-      (cond
-        result
-        (let [{:keys [viewer data error]} result]
-             (if data 
-               [viewer data]
-               [:p "error!"]))
-        error
-        [:p "error!"]
-        :else
-        [:p "loading.."])))
+    (cond
+      result
+      (let [{:keys [viewer data error]} result]
+        (if data
+          [viewer data]
+          [:p "error!"]))
+      error
+      [:p "error!"]
+      :else
+      [:p "loading.."])))
 
 
 (defn viewer2 [dali-spec]
