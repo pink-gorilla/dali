@@ -1,0 +1,22 @@
+{:name "dali"
+ ; build
+ :lazy true
+ :depends-on #{:techml-dataset-cljs}
+ :cljs-namespace [dali.viewer
+                  dali.cljviewer
+                  dali.transform.transit
+                  dali.util.color
+                  ; viewers
+                  dali.viewer.hiccup
+                  dali.viewer.exception
+                  dali.viewer.nom
+                  ]
+ :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer}
+                    'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
+                    'dali.transform.transit {'load-transit dali.transform.transit/load-transit}
+                    'dali.util.color {'set-color dali.util.color/set-color}
+                    ; viewers
+                    'dali.viewer.hiccup {'hiccup dali.viewer.hiccup/hiccup}
+                    'dali.viewer.exception {'exception dali.viewer.exception/exception}
+                    'dali.viewer.nom {'anomaly dali.viewer.nom/anomaly}
+                    }}
