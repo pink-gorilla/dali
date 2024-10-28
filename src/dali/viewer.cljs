@@ -54,7 +54,18 @@
 
 (defn viewer-impl [dali-spec]
   (let [[result set-result] (react/useState nil)
-        [error set-error] (react/useState false)]
+        [error set-error] (react/useState false)
+        ui  (r/as-element
+            (cond
+              result
+              (let [{:keys [viewer data error]} result]
+                (if data
+                  [viewer data]
+                  [:p "error!"]))
+              error
+              [:p "error!"]
+              :else
+              [:p "loading.."]))]
     (react/useEffect
      (fn []
        (set-result nil)
@@ -69,26 +80,20 @@
        (fn []
          (println "processing cleanup ..")))
      (clj->js [dali-spec]))
-    (r/as-element
-     (cond
-       result
-       (let [{:keys [viewer data error]} result]
-         (if data
-           [viewer data]
-           [:p "error!"]))
-       error
-       [:p "error!"]
-       :else
-       [:p "loading.."]))))
+    
+    (react/useMemo 
+     (fn []
+       ui
+       )
+     (clj->js ui))
+    
+   ))
 
 #_(defn viewer-wrapped [dali-spec]
   [:f> viewer-impl dali-spec])
 
 (defn viewer2 [dali-spec]
-  (let [memoized (react/useMemo viewer-impl (clj->js [dali-spec]))]
-    [:> memoized dali-spec]
-    )
-  )
+   [:> viewer-impl dali-spec])
 
 
 ; reagent.core/as-element function creates a React element from a Hiccup form.
