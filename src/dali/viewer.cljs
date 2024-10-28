@@ -11,9 +11,7 @@
   (-> (resolve-symbol transform-fn)
       (p/then (fn [transform]
                 (info "transform-fn resolve success. Now transforming.")
-                (info "transform: " transform)
                 (transform data)))))
-
 
 (defn process [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
   (let [viewer-p (resolve-symbol viewer-fn)]
@@ -21,7 +19,8 @@
       (-> (p/all [viewer-p
                   (transform-data transform-fn data)])
           (p/then (fn [[viewer data]]
-                    (info "data successfully transformed to:  " data)
+                    (info "data successfully transformed.")
+                    ;(info "data successfully transformed to:  " data)
                     {:viewer viewer
                      :data data})))
       (-> viewer-p
@@ -57,17 +56,16 @@
     (react/useEffect
      (fn []
        (set-result nil)
-       (println "processing dali-spec..")
-       (println "spec: " dali-spec)
+       (info "processing dali-spec: " dali-spec)
        (->  (process dali-spec)
             (p/then (fn [result]
-                      (println "processing dali-spec success!")
+                      (info "processing dali-spec success!")
                       (set-result result)))
             (p/catch (fn [err]
-                       (println "processing dali-spec error!")
+                       (info "processing dali-spec error!")
                        (set-error err))))
        (fn []
-         (println "processing cleanup ..")))
+         (info "processing cleanup ..")))
       #js [dali-spec])
     
     (react/useMemo 

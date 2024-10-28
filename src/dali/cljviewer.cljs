@@ -28,25 +28,22 @@
      {:display-name "clj-viewer"
       :reagent-render (fn [{:keys [fun args]
                             :or {args []}}] ;; remember to repeat parameters
-                        (let [{:keys [data error]} @a
-                              ]
+                        (let [{:keys [data error]} @a]
                           (cond 
                             data [viewer data]
                             error [:div "clj-exec error"]
                             :else [:div "executing clj"])))
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
                              (let [argv (rest (r/argv this))
-                                   [arg1] argv
-                                   ]
-                             ;(println "c-d-m: " this)
-                             (println "mount: arg:" arg1 " opts " opts)
+                                   [arg1] argv]
+                             (info "mount: arg:" arg1 " opts " opts)
                              (load-to-atom-once a fun args)
                              ))
       :component-did-update (fn [this old-argv]
                               (let [new-argv (rest (r/argv this))
                                     [arg1] new-argv
                                     {:keys [fun args]} arg1]
-                                (println "update: new-arg:"  arg1)
+                                (info "update: new-arg:"  arg1)
                                 ;(load-to-atom-once a fun args)
                                 ))})))
 
