@@ -69,7 +69,7 @@
                             (println "processing dali-spec error!")
                             (set-error err)))
                  (= ignore true))))
-          [dali-spec])
+          (clj->js [dali-spec]))
       (cond
         data 
         [viewer data]
