@@ -69,20 +69,40 @@
        (fn []
          (println "processing cleanup ..")))
      (clj->js [dali-spec]))
-    (cond
-      result
-      (let [{:keys [viewer data error]} result]
-        (if data
-          [viewer data]
-          [:p "error!"]))
-      error
-      [:p "error!"]
-      :else
-      [:p "loading.."])))
+    (r/as-element
+     (cond
+       result
+       (let [{:keys [viewer data error]} result]
+         (if data
+           [viewer data]
+           [:p "error!"]))
+       error
+       [:p "error!"]
+       :else
+       [:p "loading.."]))))
 
-(defn viewer-memoized [dali-spec]
-  (react/useMemo viewer-impl (clj->js [dali-spec])))
+#_(defn viewer-wrapped [dali-spec]
+  [:f> viewer-impl dali-spec])
 
 (defn viewer2 [dali-spec]
-  [:f> viewer-memoized dali-spec])
+  (let [memoized (react/useMemo viewer-impl (clj->js [dali-spec]))]
+    [:> memoized dali-spec]
+    )
+  )
 
+
+; reagent.core/as-element function creates a React element from a Hiccup form.
+;  some React features, like Hooks, only work with Functional components. There are several ways to use functions as components with Reagent:
+
+; 1. Calling r/create-element directly with a ClojureScript function doesn't wrap the component in any Reagent wrappers, and will create functional components. 
+; In this case you need to use r/as-element inside the function to convert Hiccup-style markup to elements, 
+; or just return React Elements yourself. You also can't use Ratoms here, as Ratom implementation requires that the component is wrapped by Reagent.
+
+; 2. :r> shortcut can be used to create components similar to r/create-element, and the children Hiccup forms are converted to React
+;  element automatically.
+
+; Using adapt-react-class or :> is also calls create-element, but that also does automatic conversion of ClojureScript parameters 
+; to JS objects, which isn't usually desired if the component is ClojureScript function.
+
+
+; :f> shortcut can be used to create function components from Reagent components (functions), where both RAtoms and Hooks work.
