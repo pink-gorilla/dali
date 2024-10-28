@@ -13,9 +13,7 @@
                 (info "transform: " transform)
                 (let [r (transform data)]
                   (info "data successfully transformed to:  " r)
-                  r
-                  )
-                ))))
+                  r)))))
 
 
 (defn process [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
@@ -33,22 +31,58 @@
 
 
 (defn viewer [{:keys [viewer-fn transform-fn data] :as dali-spec}]
+  ; this viewer has the problem that it does not work when the dali-spec changes
   (let [a (r/atom nil)]
-      (info "viewer viewer-fn: " viewer-fn " transform-fn: " transform-fn)
-      (-> (process dali-spec)
-          (p/then (fn [r]
-                    (info "load and transform complete!")
-                    (reset! a r)))
-          (p/catch (fn [err]
-                     (error "load and transform error: " err)
-                     (reset! a {:error err}))))
+    (info "viewer viewer-fn: " viewer-fn " transform-fn: " transform-fn)
+    (-> (process dali-spec)
+        (p/then (fn [r]
+                  (info "load and transform complete!")
+                  (reset! a r)))
+        (p/catch (fn [err]
+                   (error "load and transform error: " err)
+                   (reset! a {:error err}))))
     (fn [{:keys [viewer-fn transform-fn data]}]
       (let [{:keys [viewer data error] :as aval} @a]
-      (cond
-        (nil? aval)
-        [:p "loading.."]
-        error 
-        [:p "error!"]
-        :else
-        [viewer data])))))
+        (cond
+          (nil? aval)
+          [:p "loading.."]
+          error
+          [:p "error!"]
+          :else
+          [viewer data])))))
 
+
+(defn viewer2
+  [{:keys [viewer-fn transform-fn data] :as dali-spec}]
+  (let [a (r/atom nil)
+        load-spec (fn [dali-spec]
+                    (-> (process dali-spec)
+                        (p/then (fn [r]
+                                  (info "load and transform complete!")
+                                  (reset! a r)))
+                        (p/catch (fn [err]
+                                   (error "load and transform error: " err)
+                                   (reset! a {:error err})))))]
+    ; https://github.com/reagent-project/reagent/blob/master/doc/CreatingReagentComponents.md
+    (r/create-class
+     {:display-name "dali-viewer"
+      :reagent-render  (fn [{:keys [viewer-fn transform-fn data]}]
+                         (let [{:keys [viewer data error] :as aval} @a]
+                           (cond
+                             (nil? aval)
+                             [:p "loading.."]
+                             error
+                             [:p "error!"]
+                             :else
+                             [viewer data])))
+      :component-did-mount (fn [this] ; oldprops oldstate snapshot
+                             (let [new-argv (rest (r/argv this))
+                                   [arg1] new-argv
+                                   {:keys [dali-spec]} arg1]
+                               (load-spec dali-spec)))
+      :component-did-update (fn [this old-argv]
+                              (let [new-argv (rest (r/argv this))
+                                    [arg1] new-argv
+                                    {:keys [dali-spec]} arg1]
+                                ;(println "component did update: " this "argv: " new-argv)
+                                (load-spec dali-spec)))})))

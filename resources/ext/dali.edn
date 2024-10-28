@@ -9,7 +9,8 @@
                   dali.viewer.hiccup
                   dali.viewer.exception
                   dali.viewer.nom]
- :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer}
+ :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer
+                                  'viewer2 dali.viewer/viewer2}
                     'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
                     'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers
