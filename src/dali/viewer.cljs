@@ -77,12 +77,10 @@
                              [viewer data])))
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
                              (let [new-argv (rest (r/argv this))
-                                   [arg1] new-argv
-                                   {:keys [dali-spec]} arg1]
+                                   [dali-spec] new-argv]
                                (load-spec dali-spec)))
       :component-did-update (fn [this old-argv]
                               (let [new-argv (rest (r/argv this))
-                                    [arg1] new-argv
-                                    {:keys [dali-spec]} arg1]
+                                    [dali-spec] new-argv]
                                 ;(println "component did update: " this "argv: " new-argv)
                                 (load-spec dali-spec)))})))
