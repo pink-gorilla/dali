@@ -85,7 +85,7 @@
      (fn []
        ui
        )
-     (clj->js ui))
+     (clj->js [ui]))
     
    ))
 
