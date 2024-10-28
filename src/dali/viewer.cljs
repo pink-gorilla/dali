@@ -3,6 +3,7 @@
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
    [reagent.core :as r]
+   ["react" :as react]
    [dali.util.resolve :refer [resolve-symbol]]))
 
 (defn transform-data [transform-fn data]
@@ -51,36 +52,33 @@
           :else
           [viewer data])))))
 
+(defn viewer-impl [dali-spec]
+    (let [[data set-data] (react/useState nil)
+          [error set-error] (react/useState false)]
+      (react/useEffect 
+        (fn []
+          (let [ignore false]
+            (set-data nil)
+            (println "processing dali-spec..")
+            (->  (process dali-spec)
+                 (p/then (fn [result]
+                           (println "processing dali-spec success!")
+                           (when-not ignore
+                             (set-data result))))
+                 (p/catch (fn [err]
+                            (println "processing dali-spec error!")
+                            (set-error err)))
+                 (= ignore true))))
+          [dali-spec])
+      (cond
+        data 
+        [viewer data]
+        error
+        [:p "error!"]
+       :else
+        [:p "loading.."])))
+  
+  
+(defn viewer2 [dali-spec]
+  [:f> viewer-impl dali-spec])
 
-(defn viewer2
-  [{:keys [viewer-fn transform-fn data] :as dali-spec}]
-  (let [a (r/atom nil)
-        load-spec (fn [dali-spec]
-                    (-> (process dali-spec)
-                        (p/then (fn [r]
-                                  (info "load and transform complete!")
-                                  (reset! a r)))
-                        (p/catch (fn [err]
-                                   (error "load and transform error: " err)
-                                   (reset! a {:error err})))))]
-    ; https://github.com/reagent-project/reagent/blob/master/doc/CreatingReagentComponents.md
-    (r/create-class
-     {:display-name "dali-viewer"
-      :reagent-render  (fn [{:keys [viewer-fn transform-fn data]}]
-                         (let [{:keys [viewer data error] :as aval} @a]
-                           (cond
-                             (nil? aval)
-                             [:p "loading.."]
-                             error
-                             [:p "error!"]
-                             :else
-                             [viewer data])))
-      :component-did-mount (fn [this] ; oldprops oldstate snapshot
-                             (let [new-argv (rest (r/argv this))
-                                   [dali-spec] new-argv]
-                               (load-spec dali-spec)))
-      :component-did-update (fn [this old-argv]
-                              (let [new-argv (rest (r/argv this))
-                                    [dali-spec] new-argv]
-                                ;(println "component did update: " this "argv: " new-argv)
-                                (load-spec dali-spec)))})))
