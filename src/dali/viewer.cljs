@@ -70,6 +70,7 @@
      (fn []
        (set-result nil)
        (println "processing dali-spec..")
+       (println "spec: " dali-spec)
        (->  (process dali-spec)
             (p/then (fn [result]
                       (println "processing dali-spec success!")
@@ -89,10 +90,10 @@
     
    ))
 
-#_(defn viewer-wrapped [dali-spec]
+(defn viewer2 [dali-spec]
   [:f> viewer-impl dali-spec])
 
-(defn viewer2 [dali-spec]
+#_(defn viewer2 [dali-spec]
    [:> viewer-impl dali-spec])
 
 
