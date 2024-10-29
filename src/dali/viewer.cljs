@@ -13,7 +13,13 @@
                 (info "transform-fn resolve success. Now transforming.")
                 (transform data)))))
 
-(defn process [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
+(defn process 
+  "process takes a dali spec and returns {:viewer :data}
+   in the process it resolves the :viewer-fn and the 
+   optional :transform-fn 
+   if transform-fn is specified it will run on data before
+   rendering."
+  [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
   (let [viewer-p (resolve-symbol viewer-fn)]
     (if transform-fn
       (-> (p/all [viewer-p
@@ -29,7 +35,11 @@
                      :data data}))))))
 
 
-(defn viewer [{:keys [viewer-fn transform-fn data] :as dali-spec}]
+(defn viewer 
+  "the viewer renders a dali-spec in the browser. 
+   viewer-fn is a fully qualified symbol
+   transform-fn is optional and transforms the data before rendering it."
+  [{:keys [viewer-fn transform-fn data] :as dali-spec}]
   ; this viewer has the problem that it does not work when the dali-spec changes
   (let [a (r/atom nil)]
     (info "viewer viewer-fn: " viewer-fn " transform-fn: " transform-fn)
@@ -63,11 +73,23 @@
                       (set-result result)))
             (p/catch (fn [err]
                        (info "processing dali-spec error!")
-                       (set-error err))))
-       (fn []
-         (info "processing cleanup ..")))
+                       (set-error err)))) 
+       ; 2024-10-28 awb99: returning a cleanup thunk will execute the useEffect on Unmount!
+       #_(fn []
+         (info "processing cleanup .."))
+       js/undefined
+       )
       dali-spec-js) ; this fails with object.is identity check
+    ; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+    ; Object.Is ({}, {})  => false
+    ; Object.Is (x, x)  => true
+    ; https://react.dev/reference/react/useEffect
+    ; If some of your dependencies are objects or functions defined inside the component, there is 
+    ; a risk that they will cause the Effect to re-run more often than needed. 
     
+    ; To run code when a component unmounts, you can return a cleanup function from within the useEffect function.
+    ; This cleanup function will be executed right before the component is removed from the DOM.
+
     (react/useMemo 
      (fn []
       (r/as-element
