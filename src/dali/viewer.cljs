@@ -50,7 +50,7 @@
           :else
           [viewer data])))))
 
-(defn viewer-impl [dali-spec]
+(defn viewer-impl [dali-spec dali-spec-js]
   (let [[result set-result] (react/useState nil)
         [error set-error] (react/useState false)]
     (react/useEffect
@@ -66,7 +66,7 @@
                        (set-error err))))
        (fn []
          (info "processing cleanup ..")))
-      #js [dali-spec])
+      dali-spec-js) ; this fails with object.is identity check
     
     (react/useMemo 
      (fn []
@@ -85,7 +85,8 @@
      #js [result])))
 
 (defn viewer2 [dali-spec]
-  [:f> viewer-impl dali-spec])
+  (let [dali-spec-js #js [dali-spec]]
+  [:f> viewer-impl dali-spec dali-spec-js]))
 
 #_(defn viewer2 [dali-spec]
    [:> viewer-impl dali-spec])

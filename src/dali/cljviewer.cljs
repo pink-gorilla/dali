@@ -36,14 +36,14 @@
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
                              (let [argv (rest (r/argv this))
                                    [arg1] argv]
-                             (info "mount: arg:" arg1 " opts " opts)
+                             (info "component-mount: " arg1)
                              (load-to-atom-once a fun args)
                              ))
       :component-did-update (fn [this old-argv]
                               (let [new-argv (rest (r/argv this))
                                     [arg1] new-argv
                                     {:keys [fun args]} arg1]
-                                (info "update: new-arg:"  arg1)
+                                (info "component-update: "  arg1)
                                 ;(load-to-atom-once a fun args)
                                 ))})))
 
