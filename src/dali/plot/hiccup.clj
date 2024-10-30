@@ -6,5 +6,5 @@
 (defn hiccup
   [h]
   (create-dali-spec
-   {:render-fn 'dali.viewer.hiccup/hiccup
+   {:viewer-fn 'dali.viewer.hiccup/hiccup
     :data h}))
