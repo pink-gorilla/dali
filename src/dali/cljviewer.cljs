@@ -4,7 +4,7 @@
    [promesa.core :as p]
    [taoensso.timbre :refer-macros [info warn error]]
    [goldly.service.core :refer [clj]]
-   [dali.viewer :refer [viewer]]))
+   [dali.viewer :refer [viewer2]]))
 
 (defn load-to-atom-once [a fun args]
   (info "loading clj fun: " fun " args: " args)
@@ -30,7 +30,7 @@
                             :or {args []}}] ;; remember to repeat parameters
                         (let [{:keys [data error]} @a]
                           (cond 
-                            data [viewer data]
+                            data [viewer2 data]
                             error [:div "clj-exec error"]
                             :else [:div "executing clj"])))
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
@@ -44,9 +44,9 @@
                               (let [new-argv (rest (r/argv this))
                                     [arg1] new-argv
                                     {:keys [fun args]} arg1
-                                    new-fetch [fun args]
-                                    ]
+                                    new-fetch [fun args]]
                                 (info "component-update: "  arg1)
+                                ;(info "component-update: result: "  @a)
                                 ; since receiving result is triggering a re-renter
                                 ; we need to avoid an endless fetch loop.
                                 (when-not (= @last-fetch-a new-fetch)
