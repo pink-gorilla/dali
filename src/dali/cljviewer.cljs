@@ -20,10 +20,10 @@
    to dali/viewer when the result is received."
   [{:keys [fun args]
     :or {args []}
-    :as opts
-    }]
+    :as opts}]
     ; https://github.com/reagent-project/reagent/blob/master/doc/CreatingReagentComponents.md
-  (let [a (r/atom {:data nil :error nil})]
+  (let [a (r/atom {:data nil :error nil})
+        last-fetch-a (atom nil)]
     (r/create-class
      {:display-name "clj-viewer"
       :reagent-render (fn [{:keys [fun args]
@@ -37,15 +37,21 @@
                              (let [argv (rest (r/argv this))
                                    [arg1] argv]
                              (info "component-mount: " arg1)
+                             (reset! last-fetch-a [fun args])  
                              (load-to-atom-once a fun args)
                              ))
       :component-did-update (fn [this old-argv]
                               (let [new-argv (rest (r/argv this))
                                     [arg1] new-argv
-                                    {:keys [fun args]} arg1]
+                                    {:keys [fun args]} arg1
+                                    new-fetch [fun args]
+                                    ]
                                 (info "component-update: "  arg1)
-                                (load-to-atom-once a fun args)
-                                ))})))
+                                ; since receiving result is triggering a re-renter
+                                ; we need to avoid an endless fetch loop.
+                                (when-not (= @last-fetch-a new-fetch)
+                                   (reset! last-fetch-a new-fetch)
+                                   (load-to-atom-once a fun args))))})))
 
 
 
