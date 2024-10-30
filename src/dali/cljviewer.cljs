@@ -44,7 +44,7 @@
                                     [arg1] new-argv
                                     {:keys [fun args]} arg1]
                                 (info "component-update: "  arg1)
-                                ;(load-to-atom-once a fun args)
+                                (load-to-atom-once a fun args)
                                 ))})))
 
 
