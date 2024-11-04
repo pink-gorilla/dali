@@ -4,6 +4,7 @@
  :depends-on #{}
  :cljs-namespace [dali.viewer
                   dali.cljviewer
+                  dali.container
                   dali.util.color
                   ; viewers
                   dali.viewer.hiccup
@@ -12,6 +13,8 @@
  :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
                     'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
+                    'dali.container {'container-dimension dali.container/container-dimension}
+
                     'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers
                     'dali.viewer.hiccup {'hiccup dali.viewer.hiccup/hiccup}

@@ -29,17 +29,16 @@
       :reagent-render (fn [{:keys [fun args]
                             :or {args []}}] ;; remember to repeat parameters
                         (let [{:keys [data error]} @a]
-                          (cond 
+                          (cond
                             data [viewer2 data]
                             error [:div "clj-exec error"]
                             :else [:div "executing clj"])))
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
                              (let [argv (rest (r/argv this))
                                    [arg1] argv]
-                             (info "component-mount: " arg1)
-                             (reset! last-fetch-a [fun args])  
-                             (load-to-atom-once a fun args)
-                             ))
+                               (info "component-mount: " arg1)
+                               (reset! last-fetch-a [fun args])
+                               (load-to-atom-once a fun args)))
       :component-did-update (fn [this old-argv]
                               (let [new-argv (rest (r/argv this))
                                     [arg1] new-argv
@@ -50,8 +49,8 @@
                                 ; since receiving result is triggering a re-renter
                                 ; we need to avoid an endless fetch loop.
                                 (when-not (= @last-fetch-a new-fetch)
-                                   (reset! last-fetch-a new-fetch)
-                                   (load-to-atom-once a fun args))))})))
+                                  (reset! last-fetch-a new-fetch)
+                                  (load-to-atom-once a fun args))))})))
 
 
 

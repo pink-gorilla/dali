@@ -1,0 +1,15 @@
+{:name "demo"
+ ;:lazy true ; must be true, since it depends on techml-dataset-cljs
+ ;:depends-on #{:dali}
+ :cljs-routes  {"" demo.page.saying/page
+                
+                }
+ 
+  :clj-services {:name "demo"
+                 :permission nil
+                 :symbols [demo.service.saying/saying
+                           ]}
+ 
+ 
+ 
+ }

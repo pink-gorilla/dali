@@ -13,7 +13,7 @@
                 (info "transform-fn resolve success. Now transforming.")
                 (transform data)))))
 
-(defn process 
+(defn process
   "process takes a dali spec and returns {:viewer :data}
    in the process it resolves the :viewer-fn and the 
    optional :transform-fn 
@@ -34,8 +34,7 @@
                     {:viewer viewer
                      :data data}))))))
 
-
-(defn viewer 
+(defn viewer
   "the viewer renders a dali-spec in the browser. 
    viewer-fn is a fully qualified symbol
    transform-fn is optional and transforms the data before rendering it."
@@ -73,46 +72,43 @@
                       (set-result result)))
             (p/catch (fn [err]
                        (info "processing dali-spec error!")
-                       (set-error err)))) 
+                       (set-error err))))
        ; 2024-10-28 awb99: returning a cleanup thunk will execute the useEffect on Unmount!
        #_(fn []
-         (info "processing cleanup .."))
-       js/undefined
-       )
-      dali-spec-js) ; this fails with object.is identity check
+           (info "processing cleanup .."))
+       js/undefined)
+     dali-spec-js) ; this fails with object.is identity check
     ; https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
     ; Object.Is ({}, {})  => false
     ; Object.Is (x, x)  => true
     ; https://react.dev/reference/react/useEffect
     ; If some of your dependencies are objects or functions defined inside the component, there is 
     ; a risk that they will cause the Effect to re-run more often than needed. 
-    
+
     ; To run code when a component unmounts, you can return a cleanup function from within the useEffect function.
     ; This cleanup function will be executed right before the component is removed from the DOM.
 
-    (react/useMemo 
+    (react/useMemo
      (fn []
-      (r/as-element
-       (cond
-         result
-         (let [{:keys [viewer data error]} result]
-           (if data
-             [viewer data]
-             [:p "error!"]))
-         error
-         [:p "error!"]
-         :else
-         [:p "loading.."]))
-       )
+       (r/as-element
+        (cond
+          result
+          (let [{:keys [viewer data error]} result]
+            (if data
+              [viewer data]
+              [:p "error!"]))
+          error
+          [:p "error!"]
+          :else
+          [:p "loading.."])))
      #js [result])))
 
 (defn viewer2 [dali-spec]
   (let [dali-spec-js #js [dali-spec]]
-  [:f> viewer-impl dali-spec dali-spec-js]))
+    [:f> viewer-impl dali-spec dali-spec-js]))
 
 #_(defn viewer2 [dali-spec]
-   [:> viewer-impl dali-spec])
-
+    [:> viewer-impl dali-spec])
 
 ; reagent.core/as-element function creates a React element from a Hiccup form.
 ;  some React features, like Hooks, only work with Functional components. There are several ways to use functions as components with Reagent:
@@ -126,6 +122,5 @@
 
 ; Using adapt-react-class or :> is also calls create-element, but that also does automatic conversion of ClojureScript parameters 
 ; to JS objects, which isn't usually desired if the component is ClojureScript function.
-
 
 ; :f> shortcut can be used to create function components from Reagent components (functions), where both RAtoms and Hooks work.

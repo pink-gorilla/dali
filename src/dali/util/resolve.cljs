@@ -8,11 +8,9 @@
 ; replace symbols with functions
 ; functions are resolved via requiring-resolve which returns a promesa promise
 
-
 (defn resolve-symbol [s]
   (let [resolve-fn (get-resolver)]
     (resolve-fn s)))
-
 
 (defn resolve-symbols
   "input: seq of symbol

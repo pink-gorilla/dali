@@ -33,8 +33,8 @@
    {:viewer-fn 'dali.viewer.exception/exception
     :data  ;(err (.getCause ex))
     (str text "\r\n"
-        (with-out-str
-          (stack/print-stack-trace ex)))}))
+         (with-out-str
+           (stack/print-stack-trace ex)))}))
 
 (comment
   (def ex (ex-info "asdf" {:y 3}))
