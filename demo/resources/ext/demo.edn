@@ -8,6 +8,7 @@
   :clj-services {:name "demo"
                  :permission nil
                  :symbols [demo.service.saying/saying
+                           demo.service.image/sun
                            ]}
  
  

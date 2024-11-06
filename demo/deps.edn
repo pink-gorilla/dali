@@ -1,15 +1,14 @@
 {:paths ["src"
          "resources"
          "target/webly"
-         ".data"
-         ]
+         ".data"]
 
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
         org.pinkgorilla/clj-service {:mvn/version "0.3.20"}
         org.pinkgorilla/webly {:mvn/version "0.7.703"} ; build tool
         org.pinkgorilla/goldly {:mvn/version "0.7.683"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"} ; tailwind css classes
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.110"}
+        org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
   ;      org.pinkgorilla/ui-input {:mvn/version "0.2.62"}
         ;; this project
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}

@@ -7,6 +7,7 @@
   com.taoensso/telemere {:mvn/version "1.0.0-beta25"}
   org.pinkgorilla/timbre {:mvn/version "0.0.7"}
   de.otto/nom {:mvn/version "0.3.0"}
+  org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
   org.pinkgorilla/clj-service {:mvn/version "0.3.20"}}
  
  :aliases

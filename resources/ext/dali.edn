@@ -1,11 +1,12 @@
 {:name "dali"
  ; build
  :lazy true
- :depends-on #{}
+ :depends-on #{:js-interop}
  :cljs-namespace [dali.viewer
                   dali.cljviewer
                   dali.container
                   dali.util.color
+                  dali.error-boundary
                   ; viewers
                   dali.viewer.hiccup
                   dali.viewer.exception
@@ -20,4 +21,7 @@
                     'dali.viewer.hiccup {'hiccup dali.viewer.hiccup/hiccup}
                     'dali.viewer.exception {'exception dali.viewer.exception/exception}
                     'dali.viewer.nom {'anomaly dali.viewer.nom/anomaly}
+                    'dali.error-boundary {'ErrorBoundary dali.error-boundary/ErrorBoundary
+                                          'error-boundary dali.error-boundary/error-boundary
+                                          }
                     }}
