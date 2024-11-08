@@ -9,7 +9,7 @@
                   dali.error-boundary
                   ; viewers
                   dali.viewer.hiccup
-                  dali.viewer.exception
+                  dali.viewer.text
                   dali.viewer.nom]
  :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
@@ -18,8 +18,9 @@
 
                     'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers
+                    'dali.viewer.text {'text-exception dali.viewer.text/text-exception
+                                       'text dali.viewer.text/text}
                     'dali.viewer.hiccup {'hiccup dali.viewer.hiccup/hiccup}
-                    'dali.viewer.exception {'exception dali.viewer.exception/exception}
                     'dali.viewer.nom {'anomaly dali.viewer.nom/anomaly}
                     'dali.error-boundary {'ErrorBoundary dali.error-boundary/ErrorBoundary
                                           'error-boundary dali.error-boundary/error-boundary

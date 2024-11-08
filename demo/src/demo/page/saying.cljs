@@ -1,7 +1,6 @@
 (ns demo.page.saying
   (:require
    [reagent.core :as r]
-   [dali.viewer :refer [viewer2]]
    [dali.cljviewer :refer [clj-viewer]]
    [dali.container :refer [container-dimension]]
    ;[dali.error-boundary :refer [error-boundary]]

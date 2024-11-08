@@ -1,4 +1,4 @@
-(ns dali.viewer.exception
+(ns dali.viewer.text
   (:require
    [clojure.string :as str]))
 
@@ -19,6 +19,6 @@
                  :style style}]
           (map line-with-br lines))))
 
-(defn exception [data]
+(defn text-exception [data]
   [text {:class "bg-red-200 w-full h-full"
          :text data}])
