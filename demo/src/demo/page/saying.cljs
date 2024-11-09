@@ -1,6 +1,7 @@
 (ns demo.page.saying
   (:require
    [reagent.core :as r]
+   [dali.viewer :refer [viewer2]]
    [dali.cljviewer :refer [clj-viewer]]
    [dali.container :refer [container-dimension]]
    ;[dali.error-boundary :refer [error-boundary]]
@@ -26,6 +27,12 @@
    [:h1 "the sun:"]
    [clj-viewer {:fun 'demo.service.image/sun
                 :args []}]
+
+   [:h1 "viewer with edn load"]
+   [viewer2
+    {:viewer-fn 'demo.person/person
+     :transform-fn 'dali.transform.load/load-edn
+     :data {:url "/r/person.edn"}}]
 
 ; error boundary is not yet working
    ;[error-boundary  [bad-component] ]

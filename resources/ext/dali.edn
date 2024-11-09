@@ -5,17 +5,19 @@
  :cljs-namespace [dali.viewer
                   dali.cljviewer
                   dali.container
+                  dali.transform.load
                   dali.util.color
                   dali.error-boundary
                   ; viewers
                   dali.viewer.hiccup
                   dali.viewer.text
                   dali.viewer.nom]
- :cljs-ns-bindings {'dali.viewer {'viewer dali.viewer/viewer
+ :cljs-ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
+                                          'load-json dali.transform.load/load-json}
+                    'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
                     'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
                     'dali.container {'container-dimension dali.container/container-dimension}
-
                     'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers
                     'dali.viewer.text {'text-exception dali.viewer.text/text-exception
