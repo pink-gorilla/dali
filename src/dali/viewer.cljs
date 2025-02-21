@@ -4,7 +4,8 @@
    [promesa.core :as p]
    [reagent.core :as r]
    ["react" :as react]
-   [dali.util.resolve :refer [resolve-symbol]]))
+   [dali.util.resolve :refer [resolve-symbol]]
+   [dali.viewer.hiccup]))
 
 (defn transform-data [transform-fn data]
   (info "transforming: " transform-fn " data: " data)
@@ -28,11 +29,23 @@
                     (info "data successfully transformed.")
                     ;(info "data successfully transformed to:  " data)
                     {:viewer viewer
-                     :data data})))
+                     :data data}))
+          (p/catch (fn [err]
+                     (error "dali-viewer resolve-transform error: " err)
+                     {:viewer dali.viewer.hiccup/hiccup
+                      :data [:p "error in viewer-transform-resolve"]}
+                     ))
+          )
       (-> viewer-p
           (p/then (fn [viewer]
                     {:viewer viewer
-                     :data data}))))))
+                     :data data}))
+          (p/catch (fn [err]
+                     (error "dali-viewer resolve error: " err)
+                     {:viewer dali.viewer.hiccup/hiccup
+                      :data [:p "error in viewer-resolve"]}))
+          
+          ))))
 
 (defn viewer
   "the viewer renders a dali-spec in the browser. 

@@ -1,22 +1,19 @@
 {:paths ["src"
-         "resources"
-         "target/webly"
-         ".data"]
+         "resources"]
 
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
         org.pinkgorilla/clj-service {:mvn/version "0.3.20"}
-        org.pinkgorilla/webly {:mvn/version "0.7.703"} ; build tool
-        org.pinkgorilla/goldly {:mvn/version "0.7.683"}
+        org.pinkgorilla/webly {:mvn/version "0.9.717"} ; build tool
+        ;org.pinkgorilla/goldly {:mvn/version "0.7.683"}
         org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"} ; tailwind css classes
         org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
-  ;      org.pinkgorilla/ui-input {:mvn/version "0.2.62"}
         ;; this project
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
         }
 
  :aliases {;; WATCH
            :npm-install
-           {:exec-fn webly.app.app/webly-build
+           {:exec-fn webly.spa/webly-build
             :config {}
             :exec-args {:profile "npm-install"}}
            :demo
@@ -28,12 +25,12 @@
 
            ;; BUILD / SERVE
 
-           :compile {:exec-fn webly.app.app/webly-build
+           :compile {:exec-fn webly.spa/webly-build
                      :config {}
                      :exec-args {:profile "compile"}}
            
            
-           :release-adv {:exec-fn webly.app.app/webly-build
+           :release-adv {:exec-fn webly.spa/webly-build
                          :config {}
                          :exec-args {:profile "release-adv"}}
            

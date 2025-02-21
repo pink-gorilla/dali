@@ -2,7 +2,6 @@
   (:require
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
-   [sci.impl.vars :as vars]
    [webly.spa.resolve :refer [get-resolver]]))
 
 ; replace symbols with functions
@@ -30,7 +29,8 @@
               (let [tuplets (map (fn [s f]
                                    ;(println "tuplet: " (pr-str [s f]))
                                    [s f]
-                                   [s (vars/var-get f)]) symbols ps)
+                                   ;[s (vars/var-get f)] ; 2025-02-25 awb99: this should not be there. fixing in goldly did not work.
+                                   ) symbols ps)
                     d (into {} tuplets)]
                 (info "tuplets: " (pr-str tuplets))
                 ;(println "d: " (pr-str d))

@@ -1,15 +1,20 @@
 {:name "demo"
- ;:lazy true ; must be true, since it depends on techml-dataset-cljs
- ;:depends-on #{:dali}
- :cljs-routes  {"" demo.page.saying/page
-                
-                }
- 
-  :clj-services {:name "demo"
-                 :permission nil
-                 :symbols [demo.service.saying/saying
-                           demo.service.image/sun
-                           ]}
+ :lazy true ; must be true, since it depends on daku
+ :depends-on #{:dali}
+ :cljs-namespace [demo.page
+                  demo.person
+                  ]
+ :cljs-ns-bindings {'demo.page {'page demo.page/page} ; page routing
+                    'demo.person {'person demo.person/person} ; viewer resolution
+                    }
+
+ ; runtime
+ :cljs-routes  {"" demo.page/page}
+ :clj-services {:name "demo"
+                :permission nil
+                :symbols [demo.service.saying/saying
+                          demo.service.image/sun
+                          ]}
  
  
  

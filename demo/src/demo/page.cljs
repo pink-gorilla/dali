@@ -1,4 +1,4 @@
-(ns demo.page.saying
+(ns demo.page
   (:require
    [reagent.core :as r]
    [dali.viewer :refer [viewer2]]
@@ -20,6 +20,9 @@
    [container-dimension
     {:window-a window-a}]
 
+   [:div "container dimension:"
+    [:p (pr-str @window-a)]]
+   
    (when @window-a
      [clj-viewer {:fun 'demo.service.saying/saying
                   :args [(assoc {:id 3} :window @window-a)]}])
