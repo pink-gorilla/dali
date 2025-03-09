@@ -33,9 +33,8 @@
           (p/catch (fn [err]
                      (error "dali-viewer resolve-transform error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
-                      :data [:p "error in viewer-transform-resolve"]}
-                     ))
-          )
+                      :data [:p "error in viewer-transform-resolve"]})))
+
       (-> viewer-p
           (p/then (fn [viewer]
                     {:viewer viewer
@@ -43,9 +42,7 @@
           (p/catch (fn [err]
                      (error "dali-viewer resolve error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
-                      :data [:p "error in viewer-resolve"]}))
-          
-          ))))
+                      :data [:p "error in viewer-resolve"]}))))))
 
 (defn viewer
   "the viewer renders a dali-spec in the browser. 

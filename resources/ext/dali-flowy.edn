@@ -1,0 +1,7 @@
+{:name "dali-flowy"
+ ; build
+ :lazy true
+ :depends-on #{:dali}
+ :cljs-namespace [dali.flowy]
+ :cljs-ns-bindings {'dali.flowy {'dali-flow-viewer dali.flowy/dali-flow-viewer}
+                    }}

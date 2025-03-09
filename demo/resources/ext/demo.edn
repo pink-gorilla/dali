@@ -1,6 +1,6 @@
 {:name "demo"
- :lazy true ; must be true, since it depends on daku
- :depends-on #{:dali}
+ :lazy true ; must be true, since it depends on dali
+ :depends-on #{:dali :dali-flowy}
  :cljs-namespace [demo.page
                   demo.person
                   ]
@@ -10,12 +10,16 @@
 
  ; runtime
  :cljs-routes  {"" demo.page/page}
- :clj-services {:name "demo"
-                :permission nil
-                :symbols [demo.service.saying/saying
-                          demo.service.image/sun
-                          ]}
+ ;:clj-services {:name "demo"
+;                :permission nil
+;                :symbols [demo.service.saying/saying
+;                          demo.service.image/sun
+;                          ]}
  
+ :flowy [; one services is defined here, 
+          ; the rest of the services are defined in the config.
+         {:fun demo.service.counter/counter-fn :mode :ap}]
  
  
  }
+

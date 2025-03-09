@@ -3,7 +3,6 @@
  :lazy true
  :depends-on #{#_:js-interop}
  :cljs-namespace [dali.viewer
-                  dali.cljviewer
                   dali.container
                   dali.transform.load
                   dali.util.color
@@ -16,7 +15,6 @@
                                           'load-json dali.transform.load/load-json}
                     'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
-                    'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
                     'dali.container {'container-dimension dali.container/container-dimension}
                     'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers

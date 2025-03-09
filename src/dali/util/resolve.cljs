@@ -30,7 +30,7 @@
                                    ;(println "tuplet: " (pr-str [s f]))
                                    [s f]
                                    ;[s (vars/var-get f)] ; 2025-02-25 awb99: this should not be there. fixing in goldly did not work.
-                                   ) symbols ps)
+                                   )symbols ps)
                     d (into {} tuplets)]
                 (info "tuplets: " (pr-str tuplets))
                 ;(println "d: " (pr-str d))
