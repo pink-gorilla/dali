@@ -3,22 +3,19 @@
  :depends-on #{:dali :dali-flowy}
  :cljs-namespace [demo.page
                   demo.person
-                  ]
+                  demo.viewer]
  :cljs-ns-bindings {'demo.page {'page demo.page/page} ; page routing
                     'demo.person {'person demo.person/person} ; viewer resolution
-                    }
+                    'demo.viewer {'employee demo.viewer/employee}}
 
  ; runtime
  :cljs-routes  {"" demo.page/page}
- ;:clj-services {:name "demo"
-;                :permission nil
-;                :symbols [demo.service.saying/saying
-;                          demo.service.image/sun
-;                          ]}
  
- :flowy [; one services is defined here, 
-          ; the rest of the services are defined in the config.
-         {:fun demo.service.counter/counter-fn :mode :ap}]
+ :flowy [{:fun demo.service.counter/counter-fn :mode :ap}
+         {:fun demo.service.employee/best-employee :mode :clj :fixed :dali-store}
+         {:fun demo.service.saying/saying :mode :clj}
+         ;{:fun demo.service.image/sun :mode :sp}
+         ]
  
  
  }

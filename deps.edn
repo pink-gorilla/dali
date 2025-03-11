@@ -10,8 +10,9 @@
   funcool/promesa {:mvn/version "11.0.674"}
   org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; ajax http get/post/put/delete
-;  org.pinkgorilla/clj-service {:mvn/version "0.3.20"}
-  org.pinkgorilla/flowy {:mvn/version "0.1.31"}
+  org.pinkgorilla/transit-ajax {:mvn/version "0.1.10"}
+  org.pinkgorilla/webserver {:mvn/version "0.2.64"} ; dali-cache
+  org.pinkgorilla/flowy {:mvn/version "0.1.37"}
   }
  
  :aliases

@@ -3,10 +3,10 @@
 
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
         ;org.pinkgorilla/clj-service {:mvn/version "0.3.20"}
-        org.pinkgorilla/webly {:mvn/version "0.9.720"} ; build tool
+        org.pinkgorilla/webly {:mvn/version "0.9.721"} ; build tool
         ;org.pinkgorilla/goldly {:mvn/version "0.7.683"}
-        org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"} ; tailwind css classes
-        org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
+        ;org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"} ; tailwind css classes
+        ;org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
         ;; this project
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
         missionary/missionary          {:mvn/version "b.42"}}

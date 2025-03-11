@@ -19,7 +19,7 @@
            [:hr]
            [:p (str v)]
            [:hr]
-           [:p "done."]]))
+           [:p "Counter End."]]))
 
 (def dali-counter
   (m/eduction

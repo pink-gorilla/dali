@@ -8,14 +8,17 @@
                    (:timbre/clj (clip/ref :config)))}
   
   :exts {:start (extension/discover (:extension (clip/ref :config)))}
-  
+    
+  ; flowy executor
+
   :exec {:start (flowy.executor/start-executor
-                 {:env {}
+                 {:env {:dali-store (deref dali.store.cache/dali-cache-store)}
                   :exts (clip/ref :exts)}
                  (:services (clip/ref :config)))}
   
-  :flowy {:start (flowy.reflower/start-reflower (clip/ref :exec))}
+  ; webserver
   
+  :flowy {:start (flowy.reflower/start-reflower (clip/ref :exec))}
   :ctx {:start {:flowy (clip/ref :flowy)}}
   
   :webly {:start (webly.spa/start-webly
@@ -25,6 +28,8 @@
                   (:profile #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
   
+  ;; repl
+
   :nrepl {:start (nrepl.server/start-server :bind "0.0.0.0" :port 9100)
           :stop (.close this)}
 

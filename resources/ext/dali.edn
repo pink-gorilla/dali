@@ -12,7 +12,8 @@
                   dali.viewer.text
                   dali.viewer.nom]
  :cljs-ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
-                                          'load-json dali.transform.load/load-json}
+                                          'load-json dali.transform.load/load-json
+                                          'load-transit dali.transform.load/load-transit}
                     'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
                     'dali.container {'container-dimension dali.container/container-dimension}
@@ -25,4 +26,18 @@
                     ;'dali.error-boundary {'ErrorBoundary dali.error-boundary/ErrorBoundary
                     ;                      'error-boundary dali.error-boundary/error-boundary
                     ;                      }
-                    }}
+                    }
+ 
+  ; runtime
+ ;:api-routes {["tmlds/" :id ".json"] {:get cquant.tmlds.handler/ds-handler-wrapped}}
+ 
+ :web/routes [["/dali/{id}.json" {;Path Param: :provider will be extracted and passed to user-handler under :path-params.
+                                  :handler  dali.store.cache/data-handler
+                                  :middleware [ webserver.middleware.api/wrap-api-handler
+                                               ;ring.middleware.keyword-params/wrap-keyword-params
+                                               ;ring.middleware.params/wrap-params
+                                               ;tech.v3.libs.muuntaja/wrap-format-java-time
+                                               ;ring.middleware.gzip/wrap-gzip
+                                               ]}]]
+ 
+ }

@@ -5,7 +5,7 @@
    ;[dali.cljviewer :refer [clj-viewer]]
    [dali.container :refer [container-dimension]]
    ;[dali.error-boundary :refer [error-boundary]]
-   [dali.flowy :refer [dali-flow-viewer]]))
+   [dali.flowy :refer [dali-flow-viewer dali-task-viewer]]))
 
 (defonce window-a (r/atom nil))
 
@@ -37,6 +37,10 @@
    ;[:h1 "the sun:"]
    ;[clj-viewer {:fun 'demo.service.image/sun
                 ;:args []}]
+
+   [:h1 "dali-task-viewer"]
+   [dali-task-viewer 'demo.service.employee/best-employee]
+   [dali-task-viewer 'demo.service.saying/saying {:id 5}]
 
    [:h1 "dali-flow-viewer"]
    [dali-flow-viewer 'demo.service.counter/counter-fn]

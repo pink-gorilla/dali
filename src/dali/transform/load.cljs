@@ -3,7 +3,9 @@
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
    [ajax.core :as ajax]
-   [clojure.edn :as edn]))
+   [clojure.edn :as edn]
+   [transit.io :refer [decode]]
+   [transit.cljs-ajax :as transit-ajax]))
 
 (defn wrap-promise
   [AJAX-TYPE url params]
@@ -48,4 +50,15 @@
         (p/catch (fn [err]
                    (error "could not load json from url " url " err: " err))))))
 
-
+(defn load-transit [{:keys [url]}]
+  (info "loading transit from url: " url)
+  (let [load-promise (transit-ajax/GET url)]
+    (-> load-promise
+        (p/then (fn [data]
+                  (info "url " url " loaded successfully. ")
+                  ;(decode data)
+                  data))
+        (p/catch (fn [err]
+                   (error "could not load transit-data from url " url " err: " err))))
+    ; give back the original promise
+    load-promise))
