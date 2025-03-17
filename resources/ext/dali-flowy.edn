@@ -2,7 +2,16 @@
  ; build
  :lazy true
  :depends-on #{:dali}
- :cljs-namespace [dali.flowy]
+ :cljs-namespace [dali.flowy
+                  dali.flowy.tap]
  :cljs-ns-bindings {'dali.flowy {'dali-flow-viewer dali.flowy/dali-flow-viewer
                                  'dali-task-viewer dali.flowy/dali-task-viewer}
-                    }}
+                    'dali.flowy.tap {'page dali.flowy.tap/page}}
+ 
+ ; runtime
+ :cljs-routes  {"dali/tap" dali.flowy.tap/page}
+ :flowy [{:fun dali.flowy.tap/listen :mode :ap}
+         ;{:fun demo.service.employee/best-employee :mode :clj :fixed :dali-store}
+         ]
+
+ }

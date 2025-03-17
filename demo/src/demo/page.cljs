@@ -1,6 +1,7 @@
 (ns demo.page
   (:require
    [reagent.core :as r]
+   [frontend.routes :refer [goto!]]
    [dali.viewer :refer [viewer2]]
    ;[dali.cljviewer :refer [clj-viewer]]
    [dali.container :refer [container-dimension]]
@@ -14,6 +15,8 @@
 
 (defn page [_]
   [:div.h-screen.w-screen.bg-blue-100
+   [:a {:on-click #(goto! 'dali.flowy.tap/page)} " [ tap-viewer ] "]
+
    [:h1 "viewer with edn load"]
    [viewer2
     {:viewer-fn 'demo.person/person

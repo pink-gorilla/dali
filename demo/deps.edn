@@ -2,14 +2,8 @@
          "resources"]
 
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
-        ;org.pinkgorilla/clj-service {:mvn/version "0.3.20"}
         org.pinkgorilla/webly {:mvn/version "0.9.721"} ; build tool
-        ;org.pinkgorilla/goldly {:mvn/version "0.7.683"}
-        ;org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"} ; tailwind css classes
-        ;org.pinkgorilla/ui-repl {:mvn/version "0.1.112"}
-        ;; this project
-        org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
-        missionary/missionary          {:mvn/version "b.42"}}
+        org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}}
 
  :aliases {;; WATCH
            :npm-install
@@ -28,14 +22,14 @@
            ;; BUILD / SERVE
 
            :compile {:exec-fn webly.spa/webly-build
-                     :config {:extension {:disabled #{"ui-tailwind"
-                                                      "missionary-sci"}}}
-                     :exec-args {:profile "compile"}}
+                     :exec-args {:config {:extension {:disabled #{"ui-tailwind"
+                                                                  "missionary-sci"}}}
+                                 :profile "compile"}}
 
            :release-adv {:exec-fn webly.spa/webly-build
-                         :config {:extension {:disabled #{"ui-tailwind"
-                                                          "missionary-sci"}}}
-                         :exec-args {:profile "release-adv"}}
+                         :exec-args {:config {:extension {:disabled #{"ui-tailwind"
+                                                                      "missionary-sci"}}}
+                                     :profile "release-adv"}}
 
            :jetty
            {:exec-fn modular.system/start!
