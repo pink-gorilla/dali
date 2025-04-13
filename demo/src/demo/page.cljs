@@ -13,6 +13,8 @@
 (defn bad-component []
   (throw (js/Exception. "asdf")))
 
+(def saying-delay-a (r/atom 5000))
+
 (defn page [_]
   [:div.h-screen.w-screen.bg-blue-100
    [:a {:on-click #(goto! 'dali.flowy.tap/page)} " [ tap-viewer ] "]
@@ -32,21 +34,23 @@
 
    ;[clj-viewer {:fun 'demo.service.saying/saying
 ;                :args [{:id 5}]}]
-
+   
 ;(when @window-a
 ;     [clj-viewer {:fun 'demo.service.saying/saying
                   ;:args [(assoc {:id 3} :window @window-a)]}])
-
+   
    ;[:h1 "the sun:"]
    ;[clj-viewer {:fun 'demo.service.image/sun
                 ;:args []}]
-
+   
    [:h1 "dali-task-viewer"]
    [dali-task-viewer 'demo.service.employee/best-employee]
    [dali-task-viewer 'demo.service.saying/saying {:id 5}]
-
-   [:h1 "dali-flow-viewer"]
+   
    [dali-flow-viewer 'demo.service.counter/counter-fn]
+   
+   [:a {:on-click #(reset! saying-delay-a 1000)} " fast sayings "]
+   [dali-flow-viewer 'demo.service.saying/saying-flow @saying-delay-a]
 
 ; error boundary is not yet working
    ;[error-boundary  [bad-component] ]

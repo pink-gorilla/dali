@@ -14,6 +14,7 @@
  :flowy [{:fun demo.service.counter/counter-fn :mode :ap}
          {:fun demo.service.employee/best-employee :mode :clj :fixed :dali-store}
          {:fun demo.service.saying/saying :mode :clj}
+         {:fun demo.service.saying/saying-flow :mode :ap}
          ;{:fun demo.service.image/sun :mode :sp}
          ]
  
