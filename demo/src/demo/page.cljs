@@ -15,6 +15,8 @@
 
 (def saying-delay-a (r/atom 5000))
 
+(def saying-id-a (r/atom 0))
+
 (defn page [_]
   [:div.h-screen.w-screen.bg-blue-100
    [:a {:on-click #(goto! 'dali.flowy.tap/page)} " [ tap-viewer ] "]
@@ -45,7 +47,9 @@
    
    [:h1 "dali-task-viewer"]
    [dali-task-viewer 'demo.service.employee/best-employee]
-   [dali-task-viewer 'demo.service.saying/saying {:id 5}]
+
+   [:a {:on-click #(swap! saying-id-a inc)} " next saying "]
+   [dali-task-viewer 'demo.service.saying/saying {:id @saying-id-a}]
    
    [dali-flow-viewer 'demo.service.counter/counter-fn]
    
