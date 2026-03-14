@@ -9,9 +9,7 @@
                     'dali.flowy.tap {'page dali.flowy.tap/page}}
  
  ; runtime
- :cljs-routes  {"dali/tap" dali.flowy.tap/page}
- :flowy [{:fun dali.flowy.tap/listen :mode :ap}
-         ;{:fun demo.service.employee/best-employee :mode :clj :fixed :dali-store}
-         ]
+ ;:cljs-routes  {"dali/tap" dali.flowy.tap/page}
+ ;:flowy [{:fun dali.flowy.tap/listen :mode :ap}]
 
  }

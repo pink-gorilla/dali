@@ -2,8 +2,10 @@
          "resources"]
 
  :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
-        org.pinkgorilla/webly {:mvn/version "0.9.721"} ; build tool
-        org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}}
+        org.pinkgorilla/ui-router {:mvn/version "0.3.45"}
+        org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
+        org.pinkgorilla/webly {:mvn/version "0.20.732"} ; build tool
+        }
 
  :aliases {;; WATCH
            :npm-install
@@ -15,8 +17,14 @@
            {:exec-fn modular.system/start!
             :exec-args {;:profile "jetty"
                         :profile "watch"
-                        :config {:extension {:disabled #{"ui-tailwind"
-                                                         "missionary-sci"}}}
+                        :version "watch"
+                        :config [{:extension {:disabled #{"ui-tailwind"
+                                                          "missionary-sci"}}
+                                  :spa {:title "dali-demo"
+                                        :mount-fn router.app/mount}
+                                  :reitit {:wrap demo.app/wrap}
+                                  :cljs-routes-reitit demo.app/routes
+                                  }]
                         :services "demo-services.edn"}}
 
            ;; BUILD / SERVE

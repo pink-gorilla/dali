@@ -1,6 +1,6 @@
 (ns dali.plot.anomaly
   (:require
-   [de.otto.nom.core :as nom]
+   ;[de.otto.nom.core :as nom]
    [dali.spec :refer [create-dali-spec]]))
 
 (defn remove-ex [[type category data-map]]

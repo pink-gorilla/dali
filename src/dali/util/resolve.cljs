@@ -2,7 +2,7 @@
   (:require
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
-   [webly.spa.resolve :refer [get-resolver]]))
+   [shadowx.core :refer [get-resolver]]))
 
 ; replace symbols with functions
 ; functions are resolved via requiring-resolve which returns a promesa promise
