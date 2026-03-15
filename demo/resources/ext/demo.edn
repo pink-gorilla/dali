@@ -1,6 +1,6 @@
 {:name "demo"
  :lazy true ; must be true, since it depends on dali
- :depends-on #{:dali ;:dali-flowy
+ :depends-on #{:dali :dali-flowy :dali-clj
                }
  :cljs-namespace [demo.app
                   demo.page
@@ -15,12 +15,11 @@
  ; runtime 
  :cljs-routes-reitit demo.app/routes
 
- :flowy [;{:fun demo.service.counter/counter-fn :mode :ap}
-         ;{:fun demo.service.employee/best-employee :mode :clj :fixed :dali-store}
-         ;{:fun demo.service.saying/saying :mode :clj}
-         ;{:fun demo.service.saying/saying-flow :mode :ap}
-         ;{:fun demo.service.image/sun :mode :sp}
-         ]
+ :clj-service [{:fun demo.service.counter/counter-fn :mode :ap}
+               {:fun demo.service.employee/best-employee :mode :clj :ctx :dali-store}
+               {:fun demo.service.saying/saying :mode :clj}
+               {:fun demo.service.saying/saying-flow :mode :ap}
+               {:fun demo.service.image/sun :mode :sp}]
  
  
  

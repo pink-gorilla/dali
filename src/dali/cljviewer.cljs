@@ -3,7 +3,7 @@
    [reagent.core :as r]
    [promesa.core :as p]
    [taoensso.timbre :refer-macros [info warn error]]
-   [goldly.service.core :refer [clj]]
+   [clj-service.http :refer [clj]]
    [dali.viewer :refer [viewer2]]))
 
 (defn load-to-atom-once [a fun args]

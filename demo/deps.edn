@@ -1,11 +1,10 @@
 {:paths ["src"
          "resources"]
 
- :deps {org.clojure/clojure    {:mvn/version "1.11.1"}
+ :deps {org.clojure/clojure    {:mvn/version "1.12.4"}
         org.pinkgorilla/ui-router {:mvn/version "0.3.45"}
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.20.732"} ; build tool
-        }
+        org.pinkgorilla/webly {:mvn/version "0.20.732"}}
 
  :aliases {;; WATCH
            :npm-install
@@ -13,10 +12,10 @@
             :config {:extension {:disabled #{"ui-tailwind"
                                              "missionary-sci"}}}
             :exec-args {:profile "npm-install"}}
+           
            :demo
            {:exec-fn modular.system/start!
-            :exec-args {;:profile "jetty"
-                        :profile "watch"
+            :exec-args {:profile "watch"
                         :version "watch"
                         :config [{:extension {:disabled #{"ui-tailwind"
                                                           "missionary-sci"}}
@@ -27,23 +26,6 @@
                                   }]
                         :services "demo-services.edn"}}
 
-           ;; BUILD / SERVE
-
-           :compile {:exec-fn webly.spa/webly-build
-                     :exec-args {:config {:extension {:disabled #{"ui-tailwind"
-                                                                  "missionary-sci"}}}
-                                 :profile "compile"}}
-
-           :release-adv {:exec-fn webly.spa/webly-build
-                         :exec-args {:config {:extension {:disabled #{"ui-tailwind"
-                                                                      "missionary-sci"}}}
-                                     :profile "release-adv"}}
-
-           :jetty
-           {:exec-fn modular.system/start!
-            :exec-args {:profile "jetty"
-                        :config {:extension {:disabled #{"ui-tailwind"
-                                                         "missionary-sci"}}}
-                        :services "demo-services.edn"}}}
+           }
 ;
  }

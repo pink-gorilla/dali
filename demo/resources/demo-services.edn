@@ -7,24 +7,25 @@
                    (:timbre/clj (clip/ref :config)))} 
   :exts {:start (extension/discover (:extension (clip/ref :config)))}
   
-  ; flowy executor ;
-; {:start (flowy.executor/start-executor
-;                 {:env {:dali-store (deref dali.store.cache/dali-cache-store)} :exts (clip/ref :exts)}
-;                 (:services (clip/ref :config)) )}
-  
-  ; webserver 
-  ;:flowy {:start (flowy.reflower/start-reflower (clip/ref :exec))}  
-  
+;; webserver
+  :token {:start (token.core/start-token-service
+                  {:users {}
+                   :secret "AbHzj834ri9"
+                   :store-path ".gorilla/tokenstore"
+                   :providers {}
+                   :auth-expiry 604800})}
+  :clj {:start (clj-service.core/start-clj-services
+                {:exts (clip/ref :exts)
+                 :env {:dali-store (deref dali.store.cache/dali-cache-store)}})}
   :webly {:start (webly.spa/start-webly
                   {:exts (clip/ref :exts)
-                   :ctx {;:flowy (clip/ref :flowy)
-                         }}
+                   :ctx {:token (clip/ref :token)
+                         :clj (clip/ref :clj)
+                         :flowy (flowy.reflower/start-reflower (clip/ref :clj))}}
                   (clip/ref :config)
                   (:profile #ref [:modular])
                   (:version #ref [:modular]))
           :stop (webly.spa/stop-webly this)}
-
-
   
   ;; repl
   
