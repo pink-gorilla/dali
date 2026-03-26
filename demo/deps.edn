@@ -2,9 +2,11 @@
          "resources"]
 
  :deps {org.clojure/clojure    {:mvn/version "1.12.4"}
-        org.pinkgorilla/ui-router {:mvn/version "0.3.45"}
+        org.pinkgorilla/ui-router {:mvn/version "0.3.46"}
+        org.pinkgorilla/webly {:mvn/version "0.20.733"} ; build tool
+        org.pinkgorilla/shadow-x {:mvn/version "0.3.22"} ; newer version (contained in webly)
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
-        org.pinkgorilla/webly {:mvn/version "0.20.732"}}
+        }
 
  :aliases {;; WATCH
            :npm-install
@@ -17,8 +19,7 @@
            {:exec-fn modular.system/start!
             :exec-args {:profile "watch"
                         :version "watch"
-                        :config [{:extension {:disabled #{"ui-tailwind"
-                                                          "missionary-sci"}}
+                        :config [{:extension {:disabled #{"ui-tailwind"}}
                                   :spa {:title "dali-demo"
                                         :mount-fn router.app/mount}
                                   :reitit {:wrap demo.app/wrap}

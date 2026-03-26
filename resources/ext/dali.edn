@@ -1,8 +1,8 @@
-{:name "dali"
+{:extension/name :dali
  ; build
- :lazy true
- :depends-on #{#_:js-interop}
- :cljs-namespace [dali.viewer
+ :cljs/module :main
+ ; cljs namespaces need to be exported, because the clj frontend will send them.
+ :cljs/namespace [dali.viewer
                   dali.container
                   dali.transform.load
                   dali.util.color
@@ -11,7 +11,7 @@
                   dali.viewer.hiccup
                   dali.viewer.text
                   dali.viewer.nom]
- :cljs-ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
+ :cljs/ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
                                           'load-json dali.transform.load/load-json
                                           'load-transit dali.transform.load/load-transit}
                     'dali.viewer {'viewer dali.viewer/viewer

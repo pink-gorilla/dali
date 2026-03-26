@@ -1,7 +1,7 @@
-{:name "dali-clj"
+{:extension/name :dali-clj
  ; build
- :lazy true
- :depends-on #{:dali}
- :cljs-namespace [dali.cljviewer]
- :cljs-ns-bindings {'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
+ :cljs/module :main 
+ ;:cljs/when-defined :clj-service
+ :cljs/namespace [dali.cljviewer]
+ :cljs/ns-bindings {'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
                     }}

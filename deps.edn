@@ -11,7 +11,8 @@
   cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; ajax http get/post/put/delete
   org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"}
   org.pinkgorilla/webserver {:mvn/version "0.2.75"} ; dali-cache
-  org.pinkgorilla/flowy {:mvn/version "0.1.46"}}
+  org.pinkgorilla/flowy {:mvn/version "0.1.49"}
+  }
  
  :aliases
  {; github ci  

@@ -1,14 +1,15 @@
-{:name "dali-flowy"
+{:extension/name :dali-flowy
  ; build
- :lazy true
- :depends-on #{:dali}
- :cljs-namespace [dali.flowy
+ :cljs/module :main
+ ;:cljs/when-defined :flowy ; this needs also :sci really
+ :cljs/namespace [dali.flowy
                   dali.flowy.tap]
- :cljs-ns-bindings {'dali.flowy {'dali-flow-viewer dali.flowy/dali-flow-viewer
+ :cljs/ns-bindings {'dali.flowy {'dali-flow-viewer dali.flowy/dali-flow-viewer
                                  'dali-task-viewer dali.flowy/dali-task-viewer}
                     'dali.flowy.tap {'page dali.flowy.tap/page}}
  
  ; runtime
+ ; clj service also needs :flowy to be defined.
  :clj-service [{:fun dali.flowy.tap/listen :mode :ap}]
 
  }
