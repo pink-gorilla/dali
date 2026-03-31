@@ -1,5 +1,6 @@
 (ns demo.tap
   (:require
+   [dali.plot.exception :refer [exception]]
    [demo.service.saying :refer [saying]]
    [demo.service.employee :refer [best-employee]]
    [demo.service.image :refer [sun]]))
@@ -19,3 +20,7 @@
 (tap> (best-employee))
 
 (tap> (sun))
+
+
+(tap> (exception (ex-info "more data needed" {:x 3 :a "test"})))
+

@@ -4,7 +4,6 @@
    [promesa.core :as p]
    [ajax.core :as ajax]
    [clojure.edn :as edn]
-   [transit.io :refer [decode]]
    [transit.cljs-ajax :as transit-ajax]))
 
 (defn wrap-promise
@@ -56,7 +55,6 @@
     (-> load-promise
         (p/then (fn [data]
                   (info "url " url " loaded successfully. ")
-                  ;(decode data)
                   data))
         (p/catch (fn [err]
                    (error "could not load transit-data from url " url " err: " err))))

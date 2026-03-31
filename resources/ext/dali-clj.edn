@@ -1,7 +1,0 @@
-{:extension/name :dali-clj
- ; build
- :cljs/module :main 
- ;:cljs/when-defined :clj-service
- :cljs/namespace [dali.cljviewer]
- :cljs/ns-bindings {'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
-                    }}

@@ -4,14 +4,12 @@
  {org.clojure/clojure    {:mvn/version "1.12.4"}
   nano-id/nano-id {:mvn/version "1.1.0"}
   babashka/fs {:mvn/version "0.5.22"}
-  com.taoensso/telemere {:mvn/version "1.0.0-beta25"}
   org.pinkgorilla/timbre {:mvn/version "0.0.8"}
   funcool/promesa {:mvn/version "11.0.674"}
   org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
-  cljs-ajax/cljs-ajax {:mvn/version "0.8.4"} ; ajax http get/post/put/delete
   org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"}
   org.pinkgorilla/webserver {:mvn/version "0.2.75"} ; dali-cache
-  org.pinkgorilla/flowy {:mvn/version "0.1.49"}
+  org.pinkgorilla/clj-service-flowy {:mvn/version "0.2.50"}
   }
  
  :aliases

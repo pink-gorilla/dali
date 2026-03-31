@@ -17,13 +17,16 @@
             8 "8 means infinity "
             9 "what is the secret of nine?"
             nil)]
-    (hiccup [:div.bg-blue-300.w-100.h-100
-             [:h1 "Sayings Response"]
-             [:p "You entered: " id]
-             [:hr]
-             (if s
-               [:p.bg-green-500.p-5 s]
-               [:p.bg-red-500.p-5 "This saying does not exist: " id])])))
+    (if s 
+      (hiccup [:div.bg-blue-300.w-100.h-100
+               [:h1 "Sayings Response"]
+               [:p "You entered: " id]
+               [:hr]
+               (if s
+                 [:p.bg-green-500.p-5 s]
+                 [:p.bg-red-500.p-5 "This saying does not exist: " id])])  
+      (throw (ex-info "saying does not exist" {:id id})))
+    ))
 
 
 (defn forever [task]

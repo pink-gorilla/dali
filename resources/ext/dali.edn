@@ -1,28 +1,19 @@
 {:extension/name :dali
  ; build
  :cljs/module :main
- ; cljs namespaces need to be exported, because the clj frontend will send them.
- :cljs/namespace [dali.viewer
-                  dali.container
-                  dali.transform.load
-                  dali.util.color
-                  ;dali.error-boundary
+ :cljs/namespace [dali.transform.load
                   ; viewers
                   dali.viewer.hiccup
                   dali.viewer.text
-                  dali.viewer.nom]
+                  dali.viewer.exception]
  :cljs/ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
                                           'load-json dali.transform.load/load-json
                                           'load-transit dali.transform.load/load-transit}
-                    'dali.viewer {'viewer dali.viewer/viewer
-                                  'viewer2 dali.viewer/viewer2}
-                    'dali.container {'container-dimension dali.container/container-dimension}
-                    'dali.util.color {'set-color dali.util.color/set-color}
                     ; viewers
                     'dali.viewer.text {'text-exception dali.viewer.text/text-exception
                                        'text dali.viewer.text/text}
                     'dali.viewer.hiccup {'hiccup dali.viewer.hiccup/hiccup}
-                    'dali.viewer.nom {'anomaly dali.viewer.nom/anomaly}
+                    'dali.viewer.exception {'exception-viewer dali.viewer.exception/exception-viewer}
                     ;'dali.error-boundary {'ErrorBoundary dali.error-boundary/ErrorBoundary
                     ;                      'error-boundary dali.error-boundary/error-boundary
                     ;                      }
@@ -39,5 +30,7 @@
                                                ;tech.v3.libs.muuntaja/wrap-format-java-time
                                                ;ring.middleware.gzip/wrap-gzip
                                                ]}]]
+ 
+ :clj-service [{:fun dali.flowy.tap/listen :mode :ap}]
  
  }

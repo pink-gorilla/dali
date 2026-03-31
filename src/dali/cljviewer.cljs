@@ -31,7 +31,7 @@
                         (let [{:keys [data error]} @a]
                           (cond
                             data [viewer2 data]
-                            error [:div "clj-exec error"]
+                            error [:div "clj-exec error" (pr-str error)]
                             :else [:div "executing clj"])))
       :component-did-mount (fn [this] ; oldprops oldstate snapshot
                              (let [argv (rest (r/argv this))

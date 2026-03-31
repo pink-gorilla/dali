@@ -3,7 +3,9 @@
    [missionary.core :as m]
    [reagent.core :as r]
    [flowy.reflower :refer [task flow]]
-   [dali.viewer :refer [viewer2]]))
+   [dali.viewer :refer [viewer2]]
+   [dali.viewer.exception :refer [exception-viewer]]
+   ))
 
 (defn dali-flow-viewer [& fun-args]
   (r/with-let [a (r/atom :waiting)
@@ -49,16 +51,23 @@
             task (m/sp
                   (let [v (m/? t)]
                     (println "task->ratom VALUE: " v)
-                    (reset! a v)
+                    (reset! a {:data v})
                     v))
             dispose! (task
                       #(println "task->ratom completed. value: " %)
-                      #(println "task->ratom crashed: " %))]
+                      (fn [err]
+                        (println "task->ratom crashed: " err)
+                        (reset! a {:error err})
+                        ))]
         (reset! dispose-a dispose!)))
       ; ui      
-      (if (= :waiting @a)
+      (cond
+        (= :waiting @a)
         [:div "dali-task-viewer waiting for data"]
-        [viewer2 @a])
+        (:error @a)
+        [exception-viewer (:error @a)]
+        :else                   
+        [viewer2 (:data @a)])
       (finally
         (println "Cleanup: stopping dali-task-viewer!")
         (dispose!))))

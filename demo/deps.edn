@@ -3,8 +3,7 @@
 
  :deps {org.clojure/clojure    {:mvn/version "1.12.4"}
         org.pinkgorilla/ui-router {:mvn/version "0.3.46"}
-        org.pinkgorilla/webly {:mvn/version "0.20.733"} ; build tool
-        org.pinkgorilla/shadow-x {:mvn/version "0.3.22"} ; newer version (contained in webly)
+        org.pinkgorilla/webly {:mvn/version "0.20.736"} ; build tool
         org.pinkgorilla/dali {:local/root "../" :deps/manifest :deps}
         }
 
