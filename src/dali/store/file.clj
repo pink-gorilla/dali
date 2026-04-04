@@ -14,11 +14,13 @@
 
 (defrecord file-store [fpath rpath]
   dali-store
-  (write [_ fmt v]
+  (write [_ {:keys [fmt path]
+             :or {path "/"}} v]
     (let [id (nano-id 5)
-          filename (str id "." fmt)
-          filename-absolute (str fpath "/" filename)
-          url (str rpath "/" filename)]
+          extension (case fmt :image "png" :transit-json ".transit.json" :else fmt)
+          filename (str id "." extension)
+          filename-absolute (str fpath path filename)
+          url (str rpath path filename)]
       (fs/create-dirs fpath)
       (write-file fmt filename-absolute v)
       {:id id
@@ -26,12 +28,14 @@
        :filename filename
        :fmt fmt}))
   (open [_ {:keys [fmt filename]}]
-        (let [filename-absolute (str fpath "/" filename)]
-          (let [v (open-file fmt filename-absolute)]
-            v))))
+    (let [filename-absolute (str fpath "/" filename)
+          v (open-file fmt filename-absolute)]
+
+      v)))
 
 (defn create-dali-file-store [{:keys [fpath rpath]}]
   (file-store. fpath rpath))
+
 
 
 

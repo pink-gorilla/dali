@@ -6,22 +6,17 @@
 /checkouts/
 .nrepl-port
 .cpcache/
-/test/creds.edn
 .classpath
 .project
 .settings/*
 .calva
 .lsp/
-.webly
 certs
-target/
 ci/deps.edn
-demo-webly/karma.conf.js
 \#*\#
-creds.edn
-creds-wien.edn
-creds-localhost.edn
-.clj-kondo
+# Keep shared lint config; ignore clj-kondo cache / imports / hooks
+.clj-kondo/*
+!.clj-kondo/config.edn
 *~
 \#*\#
 .\#*
@@ -32,7 +27,6 @@ karma.conf.js
 package.json
 package-lock.json
 shadow-cljs.edn
-goldly_bindings_generated.cljs
 resources/META-INF
 .data
 .gorilla

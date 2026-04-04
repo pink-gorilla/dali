@@ -1,14 +1,11 @@
 (ns demo.service.image
   (:require
    [dali.plot.image :refer [image]]
-   [dali.store.file :refer [create-dali-file-store open-file]]))
+   [dali.store.file :refer [open-file]]))
 
-(def env
-  {:dali-store (create-dali-file-store
-                {:fpath ".gorilla/public/dali"
-                 :rpath "/r/dali"})})
+(def i (open-file :image "resources/sun.png"))
 
-(def i (open-file "png" "resources/sun.png"))
+i
 
 (defn sun []
-  (image env {} i))
+  (image {:alt "sun"} i))

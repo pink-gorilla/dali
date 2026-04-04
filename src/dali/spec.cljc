@@ -5,7 +5,7 @@
        viewer-fn
        (symbol? viewer-fn)))
 
-(defn create-dali-spec [{:keys [viewer-fn transform-fn data] :as dali-spec}]
+(defn create-dali-spec [{:keys [viewer-fn transform-fn _data] :as dali-spec}]
   (assert viewer-fn "viewer-fn is a required parameter")
   (assert (symbol? viewer-fn) "viewer-fn needs to be a symbol")
   (when transform-fn

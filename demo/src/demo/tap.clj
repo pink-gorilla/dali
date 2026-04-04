@@ -36,7 +36,6 @@
        (saying {:id 5})
        (hiccup [:p "123"])
        (hiccup [:p "456"])
-       (hiccup [:p "789"])
-       ))
+       (hiccup [:p "789"])))
 
 (tap> (exception (ex-info "more data needed" {:x 3 :a "test"})))

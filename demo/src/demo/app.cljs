@@ -10,6 +10,5 @@
 
 (def routes
   [["/" {:name 'demo.page/page}]
-   ["/dali/tap" {:name 'dali.flowy.tap/page}]
-   ])
+   ["/dali/tap" {:name 'dali.flowy.tap/page}]])
 

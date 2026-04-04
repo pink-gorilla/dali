@@ -30,15 +30,13 @@
                          :borderRadius "0 0.375rem 0.375rem 0"
                          :lineHeight 1.5}}
                 s]])
-      (throw (ex-info "saying does not exist" {:id id})))
-    ))
-
+      (throw (ex-info "saying does not exist" {:id id})))))
 
 (defn forever [task]
   (m/ap (m/? (m/?> (m/seed (repeat task))))))
 
 (defn saying-flow [saying-delay-ms]
-  (let [random-saying-t (m/sp 
+  (let [random-saying-t (m/sp
                          (m/? (m/sleep saying-delay-ms))
                          (saying {:id (rand-int 10)}))]
     (forever random-saying-t)))

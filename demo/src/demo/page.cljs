@@ -6,8 +6,7 @@
    [dali.cljviewer :refer [clj-viewer]]
    [dali.container :refer [container-dimension]]
    ;[dali.error-boundary :refer [error-boundary]]
-   [dali.flowy :refer [dali-flow-viewer dali-task-viewer]]
-   ))
+   [dali.flowy :refer [dali-flow-viewer dali-task-viewer]]))
 
 (defonce window-a (r/atom nil))
 

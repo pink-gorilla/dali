@@ -1,5 +1,4 @@
 (ns dali.store.file.image
-  (:refer-clojure :exclude [read])
   (:require
    [clojure.java.io :as io]
    [dali.store.file :refer [write-file open-file]])
@@ -8,11 +7,11 @@
    java.awt.image.BufferedImage
    javax.imageio.ImageIO))
 
-(defmethod write-file "png" [_ filename ^BufferedImage buffered-image]
+(defmethod write-file :image [_ filename ^BufferedImage buffered-image]
   (ImageIO/write buffered-image
                  "png"
                  ^java.io.File (io/file filename)))
 
-(defmethod open-file "png" [_ filename]
+(defmethod open-file :image [_ filename]
   (ImageIO/read (io/file filename)))
 

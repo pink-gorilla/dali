@@ -39,8 +39,7 @@
           (p/then (fn [viewer]
                     {:viewer viewer
                      :data data
-                     :children children
-                     }))
+                     :children children}))
           (p/catch (fn [err]
                      (error "dali-viewer resolve error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
@@ -114,9 +113,8 @@
                   (if children
                     (let [v  [viewer data (->> children
                                                (map (fn [child]
-                                                    [viewer2 child]))
-                                               (into []))]
-                                    ]
+                                                      [viewer2 child]))
+                                               (into []))]]
                       (println "collection viewer:" (pr-str v))
                       v)
                     [viewer data]))

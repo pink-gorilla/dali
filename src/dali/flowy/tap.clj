@@ -2,7 +2,9 @@
   (:require
    [missionary.core :as m]
    [taoensso.timbre :refer [info]]
-   [dali.spec :refer [dali-spec?]]))
+   [dali.spec :refer [dali-spec?]]
+   [dali.store.file :refer [create-dali-file-store]]
+   [dali.store :refer [store-data]]))
 
 (def tap-flow
   (m/stream
@@ -14,8 +16,12 @@
         (info "dali tap viewer stopped (unlisten to clojure tap events).")
         (remove-tap !))))))
 
+(def s (create-dali-file-store {:fpath ".gorilla/public/dali-tap"
+                                :rpath "/r/dali-tap"}))
+
 (defn listen []
   (m/eduction
    (filter dali-spec?)
+   (map (fn [dali-spec] (store-data s dali-spec)))
    tap-flow))
 

@@ -1,6 +1,5 @@
 (ns demo.nav
   (:require
-   [reagent.core :as r]
    [reitit.frontend.easy :as rfe]))
 
 (defn link-fn [fun text]

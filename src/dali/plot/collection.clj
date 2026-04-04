@@ -2,7 +2,6 @@
   (:require
    [dali.spec :refer [create-dali-spec dali-spec?]]))
 
-
 (defn collection
   "Renders children inside a dali-collection layout wrapper."
   [opts & children]

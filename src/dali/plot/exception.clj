@@ -1,10 +1,7 @@
 (ns dali.plot.exception
   (:require
-   [clojure.main :as main]
-   [clojure.string :as str]
    [dali.spec :refer [create-dali-spec]]
    [clj-service.response :refer [convert-ex]]))
-
 
 (defn exception
   "returns a plot specification {:render-fn :spec :data}. 
@@ -22,7 +19,6 @@
   (stack/print-stack-trace ex)
   (stack/print-cause-trace ex)
   (stack/root-cause ex)
-   
 
 ;
   )
