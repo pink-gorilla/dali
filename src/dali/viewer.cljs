@@ -20,7 +20,7 @@
    optional :transform-fn 
    if transform-fn is specified it will run on data before
    rendering."
-  [{:keys [viewer-fn transform-fn data] :as _dali-spec}]
+  [{:keys [viewer-fn transform-fn data children] :as _dali-spec}]
   (let [viewer-p (resolve-symbol viewer-fn)]
     (if transform-fn
       (-> (p/all [viewer-p
@@ -38,7 +38,9 @@
       (-> viewer-p
           (p/then (fn [viewer]
                     {:viewer viewer
-                     :data data}))
+                     :data data
+                     :children children
+                     }))
           (p/catch (fn [err]
                      (error "dali-viewer resolve error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
@@ -68,6 +70,8 @@
           [:p "error!"]
           :else
           [viewer data])))))
+
+(declare viewer2)
 
 (defn viewer-impl [dali-spec dali-spec-js]
   (let [[result set-result] (react/useState nil)
@@ -103,10 +107,22 @@
        (r/as-element
         (cond
           result
-          (let [{:keys [viewer data error]} result]
+          (let [{:keys [viewer data error children]} result]
             (if data
-              [viewer data]
-              [:p "error!"]))
+              ; data
+              (do (println "data viewer:" data " children:" children)
+                  (if children
+                    (let [v  [viewer data (->> children
+                                               (map (fn [child]
+                                                    [viewer2 child]))
+                                               (into []))]
+                                    ]
+                      (println "collection viewer:" (pr-str v))
+                      v)
+                    [viewer data]))
+
+; no data
+              [:p "error:dali-spec has no data."]))
           error
           [:p "error!"]
           :else

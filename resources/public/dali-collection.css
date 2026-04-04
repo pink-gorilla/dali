@@ -1,0 +1,98 @@
+/*
+ * Collection root is a single div.dali-collection with an extra layout class
+ * (grid | row | row-border | title). Inside a grid, use a direct child with class .title for the heading row.
+ * min-width helps inside flex parents; percentage grid tracks use this box’s width.
+ */
+div.dali-collection {
+  min-width: 0;
+  width: 100%;
+}
+
+/*
+ * Responsive grid: 1–3 columns from layout width.
+ * Track minimum is min(100%, max(minimum-col, one-third of row minus gaps)) so the first
+ * column can always shrink to the full row on narrow containers.
+ */
+div.dali-collection.grid {
+  --dali-collection-grid-gap: 1rem;
+  --dali-collection-grid-min-col: 15rem;
+  /* ~1200px at 16px root; rem tracks user font-size settings (unlike px). */
+  --dali-collection-grid-max-width: 75rem;
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  max-width: min(var(--dali-collection-grid-max-width), 100%);
+  gap: var(--dali-collection-grid-gap);
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(
+      min(
+        100%,
+        max(
+          min(100%, var(--dali-collection-grid-min-col)),
+          calc((100% - 2 * var(--dali-collection-grid-gap)) / 3)
+        )
+      ),
+      1fr
+    )
+  );
+}
+
+/* Grid items default to min-width: auto, which can force extra columns; allow shrinking to one column. */
+div.dali-collection.grid > * {
+  min-width: 0;
+}
+
+/* Single column on small viewports. */
+@media (max-width: 31.5rem) {
+  div.dali-collection.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Vertical stack with capped width; scrolls vertically when content exceeds max-height. */
+div.dali-collection.row,
+div.dali-collection.row-border {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 42rem;
+  width: 100%;
+  max-height: min(70vh, 36rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Same as .row with a frame around the scroll region. */
+div.dali-collection.row-border {
+  padding: 0.75rem;
+  border: 1px solid color-mix(in oklab, currentColor 18%, transparent);
+  border-radius: 0.375rem;
+}
+
+/*
+ * Title: light blue bar, larger type.
+ * — title on the collection root only (no .grid on the same root).
+ * — inside a grid: a direct child with .title (must be a grid item so grid-column applies).
+ */
+div.dali-collection.title:not(.grid) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  padding: 0.65rem 1rem;
+  background: oklch(0.96 0.04 245);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+div.dali-collection.grid > .title {
+  grid-column: 1 / -1;
+  box-sizing: border-box;
+  padding: 0.65rem 1rem;
+  background: oklch(0.96 0.04 245);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.35;
+}

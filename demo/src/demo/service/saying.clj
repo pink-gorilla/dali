@@ -17,14 +17,19 @@
             8 "8 means infinity "
             9 "what is the secret of nine?"
             nil)]
-    (if s 
-      (hiccup [:div.bg-blue-300.w-100.h-100
-               [:h1 "Sayings Response"]
-               [:p "You entered: " id]
-               [:hr]
-               (if s
-                 [:p.bg-green-500.p-5 s]
-                 [:p.bg-red-500.p-5 "This saying does not exist: " id])])  
+    (if s
+      (hiccup [:div
+               [:h1 "Saying " id]
+               [:blockquote
+                {:style {:fontSize "1.4rem"
+                         :fontFamily "cursive, Georgia, serif"
+                         :margin "0.75rem 0 0 0"
+                         :padding "1rem 1.25rem"
+                         :borderLeft "4px solid #6b9bd1"
+                         :backgroundColor "#eef6fc"
+                         :borderRadius "0 0.375rem 0.375rem 0"
+                         :lineHeight 1.5}}
+                s]])
       (throw (ex-info "saying does not exist" {:id id})))
     ))
 

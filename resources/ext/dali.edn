@@ -32,5 +32,8 @@
                                                ]}]]
  
  :clj-service [{:fun dali.flowy.tap/listen :mode :ap}]
+
+ :theme {:available  {:dali-collection {true ["dali-collection.css"]}}
+         :current {:dali-collection true}}
  
  }
