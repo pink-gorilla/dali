@@ -1,8 +1,15 @@
 (ns notebook.dali.dali-plot
   (:require
+   [clojure.java.io :as io]
    [dali.plot.exception :refer [exception]]
    [dali.plot.hiccup :refer [hiccup]]
-   [dali.plot.collection :refer [collection]]))
+   [dali.plot.image :refer [image]]
+   [dali.plot.collection :refer [collection]])
+  (:import
+   javax.imageio.ImageIO))
+
+(def sun-img
+  (ImageIO/read (io/resource "demodata/sun.png")))
 
 (collection
  {:class "grid"
@@ -12,7 +19,9 @@
                ; :width "200px"
           }}
  (hiccup [:h1.title "demo grid collection"])
- sun
+
+ (image {:alt "sun"} sun-img)
+
  (hiccup [:p "123"])
  (hiccup [:p "456"])
  (hiccup [:p "789"])

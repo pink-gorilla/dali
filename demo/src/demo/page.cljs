@@ -71,11 +71,6 @@
                   ;:args [(assoc {:id 3} :window @window-a)]}])
 
       [:div {:style cell-stack}
-       [:h1 "the sun:"]
-       [clj-viewer {:fun 'demo.service.image/sun
-                    :args []}]]
-
-      [:div {:style cell-stack}
        [:h1 "dali-task-viewer"]
        [dali-task-viewer 'demo.service.employee/best-employee]]
 

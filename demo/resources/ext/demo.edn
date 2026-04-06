@@ -1,20 +1,14 @@
-{:name "demo"
- :lazy true ; must be true, since it depends on dali
- :depends-on #{:dali :dali-flowy :dali-clj
-               }
- :cljs-namespace [demo.app
+{:extension/name :demo-app
+ :cljs/module :main
+ :cljs/namespace [demo.app
                   demo.page
                   demo.person
-                  demo.viewer
-                  dali.flowy.tap
-                  ]
- :cljs-ns-bindings {'demo.app {'routes demo.app/routes
+                  demo.viewer]
+ :cljs/ns-bindings {'demo.app {'routes demo.app/routes
                                'wrap demo.app/wrap} 
                     'demo.page {'page demo.page/page} ; page routing
                     'demo.person {'person demo.person/person} ; viewer resolution
-                    'demo.viewer {'employee demo.viewer/employee}
-                    'dali.flowy.tap {'page dali.flowy.tap/page}
-                    }
+                    'demo.viewer {'employee demo.viewer/employee}}
 
  ; runtime 
  :cljs-routes-reitit demo.app/routes
@@ -22,8 +16,7 @@
  :clj-service [{:fun demo.service.counter/counter-fn :mode :ap}
                {:fun demo.service.employee/best-employee :mode :clj :ctx :dali-store}
                {:fun demo.service.saying/saying :mode :clj}
-               {:fun demo.service.saying/saying-flow :mode :ap}
-               {:fun demo.service.image/sun :mode :clj}]
+               {:fun demo.service.saying/saying-flow :mode :ap}]
  
  
  

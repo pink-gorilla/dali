@@ -1,12 +1,19 @@
 {:extension/name :dali
  ; build
  :cljs/module :main
- :cljs/namespace [dali.transform.load
+ :cljs/namespace [dali.spec
+                  dali.transform.load
                   ; viewers
                   dali.viewer.hiccup
                   dali.viewer.text
-                  dali.viewer.exception]
- :cljs/ns-bindings {'dali.transform.load {'load-edn dali.transform.load/load-edn
+                  dali.viewer.exception
+                  dali.flowy.tap
+                  ; encoding
+                  dali.encoding.config]
+ :cljs/ns-bindings {; spec is relevant because it adds transit handlers to the transit.io library.
+                    'dali.spec {'add-spec-transit-handlers! dali.spec/add-spec-transit-handlers!}
+
+                    'dali.transform.load {'load-edn dali.transform.load/load-edn
                                           'load-json dali.transform.load/load-json
                                           'load-transit dali.transform.load/load-transit}
                     ; viewers
@@ -17,23 +24,30 @@
                     ;'dali.error-boundary {'ErrorBoundary dali.error-boundary/ErrorBoundary
                     ;                      'error-boundary dali.error-boundary/error-boundary
                     ;                      }
+                    'dali.flowy.tap {'page dali.flowy.tap/page}
+                    'dali.encoding.config {'start-encoding dali.encoding.config/start-encoding}
                     }
- 
-  ; runtime
+
+; runtime
  ;:api-routes {["tmlds/" :id ".json"] {:get cquant.tmlds.handler/ds-handler-wrapped}}
  
  :web/routes [["/dali/{id}.json" {;Path Param: :provider will be extracted and passed to user-handler under :path-params.
                                   :handler  dali.store.cache/data-handler
-                                  :middleware [ webserver.middleware.api/wrap-api-handler
+                                  :middleware [webserver.middleware.api/wrap-api-handler
                                                ;ring.middleware.keyword-params/wrap-keyword-params
                                                ;ring.middleware.params/wrap-params
                                                ;tech.v3.libs.muuntaja/wrap-format-java-time
                                                ;ring.middleware.gzip/wrap-gzip
                                                ]}]]
- 
+
  :clj-service [{:fun dali.flowy.tap/listen :mode :ap}]
 
+ :cljs-service {:config-fn dali.encoding.config/config-encoding ; build  config
+                :start-fn dali.encoding.config/start-encoding} ; start cljs service
+ 
  :theme {:available  {:dali-collection {true ["dali-collection.css"]}}
          :current {:dali-collection true}}
+ 
+
  
  }

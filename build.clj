@@ -4,7 +4,7 @@
    [deps-deploy.deps-deploy :as dd]))
 
 (def lib 'org.pinkgorilla/dali)
-(def version (format "0.7.%s" (b/git-count-revs nil)))
+(def version (format "0.8.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))

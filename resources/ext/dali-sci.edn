@@ -7,7 +7,7 @@
                   dali.util.color
                   dali.cljviewer
                   dali.flowy
-                  dali.flowy.tap]
+                  ]
  :cljs/ns-bindings {'dali.viewer {'viewer dali.viewer/viewer
                                   'viewer2 dali.viewer/viewer2}
                     'dali.container {'container-dimension dali.container/container-dimension}
@@ -15,6 +15,6 @@
                     'dali.cljviewer {'clj-viewer dali.cljviewer/clj-viewer}
                     'dali.flowy {'dali-flow-viewer dali.flowy/dali-flow-viewer
                                  'dali-task-viewer dali.flowy/dali-task-viewer}
-                    'dali.flowy.tap {'page dali.flowy.tap/page}
+                    
                     }}
 
