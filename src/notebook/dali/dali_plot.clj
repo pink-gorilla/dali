@@ -8,8 +8,19 @@
   (:import
    javax.imageio.ImageIO))
 
+;; 
+;; test plotting an image
+;; 
+
+
 (def sun-img
   (ImageIO/read (io/resource "demodata/sun.png")))
+
+(image {:alt "sun"} sun-img)
+
+;;
+;; plot a collection of dali-specs
+;;
 
 (collection
  {:class "grid"
@@ -28,6 +39,10 @@
  (hiccup [:p "123"])
  (hiccup [:p "456"])
  (hiccup [:p "789"]))
+
+;;
+;; lets plot an exception
+;;
 
 (exception (ex-info "more data needed" {:x 3 :a "test"}))
 

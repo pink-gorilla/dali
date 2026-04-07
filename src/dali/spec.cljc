@@ -29,7 +29,7 @@
               (vector? children)) ":children must be a seq/vector")
   ; store-format
   (assert (or (not store-format)
-              (symbol? store-format)) ":store-format must be a symbol")
+              (keyword store-format)) ":store-format must be a keyword")
   ; store-set-url
   (assert (or (nil? store-set-url)
               (fn? store-set-url)) ":store-set-url must be a function")
