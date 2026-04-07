@@ -29,6 +29,7 @@
 
 (tap> (exception (ex-info "more data needed" {:x 3 :a "test"})))
 
+
 (tap> (collection
        {:class "grid"
         :style {:border "1px solid black"
@@ -40,6 +41,7 @@
        (saying {:id 1})
        (saying {:id 2})
        (saying {:id 5})
+       sun
        (hiccup [:p "123"])
        (hiccup [:p "456"])
        (hiccup [:p "789"])))

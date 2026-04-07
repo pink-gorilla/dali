@@ -60,9 +60,9 @@
       :data [:img {:width w
                    :height h
                    :alt alt}]
-      :dali.store/format :image
-      :dali.store/data image
-      :dali.store/set-url set-url})))
+      :store-format :image
+      :store-data image
+      :store-set-url set-url})))
 
 (comment
   (set-url [:img {:width 100 :height 100}]

@@ -4,18 +4,33 @@
   (write [this opts v])
   (open [this opts]))
 
+(declare store-data-children)
+
 (defn store-data [s dali-spec]
-  (let [format (:dali.store/format dali-spec)
-        set-url (:dali.store/set-url dali-spec)
-        store-data (:dali.store/data dali-spec)
-        path (or (:dali.store/path dali-spec) "/")]
-    (if (and format set-url store-data)
-      (let [{:keys [url]} (write s {:fmt format :path path} store-data)]
-        (-> dali-spec
-            (update :data set-url url)
-            (dissoc :dali.store/format :dali.store/data :dali.store/set-url
-                    :dali.store/path)))
-      dali-spec)))
+  (let [format (:store-format dali-spec)
+        set-url (:store-set-url dali-spec)
+        store-data (:store-data dali-spec)
+        path (or (:store-path dali-spec) "/")
+        dali-spec (if (and format set-url store-data)
+                        ; needs store
+                    (let [{:keys [url]} (write s {:fmt format :path path} store-data)]
+                      (-> dali-spec
+                          (update :data set-url url)
+                          (dissoc :store-format :store-data :store-set-url
+                                  :store-path)))
+                    dali-spec)]
+    ; finally store for all children.
+    (store-data-children s dali-spec)))
+
+(defn store-data-children [s dali-spec]
+  (if-let [children (:children dali-spec)]
+    (assoc dali-spec
+           :children
+           (->> children
+                (map #(store-data s %))
+                (into [])))
+    dali-spec))
+
 
 (comment
 
