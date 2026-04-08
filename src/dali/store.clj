@@ -15,7 +15,10 @@
                     (let [{:keys [url]} (write s format store-data)]
                       (-> dali-spec
                           (update :data set-url url)
-                          (dissoc :store-format :store-data :store-set-url)))
+                          (assoc :store-format nil
+                                 :store-data nil 
+                                 :store-set-url nil)
+                          ))
                     dali-spec)]
     ; finally store for all children.
     (store-data-children s dali-spec)))
@@ -32,7 +35,7 @@
 
 (comment
 
-  (require '[dali.store.file :refer [open-file create-dali-file-store set-sub-path]])
+  (require '[dali.store.file :refer [open-file create-dali-file-store]])
   (def i (open-file :image "resources/sun.png"))
   (require '[dali.plot.image :refer [image]])
   (def sun  (image {:alt "sun"} i))
@@ -40,10 +43,10 @@
   (keys sun)
   (def s (create-dali-file-store {:fpath ".gorilla/public/dali-tap"
                                   :rpath "/r/dali-tap"}))
-  (set-sub-path s "/images/")
+  
   (require '[dali.store.file.image])
   ; side effects
-
+  
   (store-data s sun)
 
 ; 

@@ -51,9 +51,17 @@
 
 (def dali-spec-tag "dali.spec/DaliSpec")
 
+(defn remove-nil-values [m]
+  (->> m
+       (map (fn [[k v]]
+              (when (some? v) [k v])))
+       (into {})))
+
 (defn prepare [x]
   ; store is excluded. 
-  (select-keys x [:viewer-fn :transform-fn :data :children]))
+  (-> x 
+      (select-keys [:viewer-fn :transform-fn :data :children])    
+      (remove-nil-values)))
 
 (def spec-serialization-handlers
   {dali.spec.DaliSpec
@@ -72,6 +80,9 @@
 ; this is the side effect that we want to happen.
 (add-spec-transit-handlers!)
 
+
+
+
 (comment
   (def s (create-dali-spec {:viewer-fn 'dali.viewer.hiccup/hiccup
                             :data [:p "123"]}))
@@ -80,6 +91,15 @@
   ; test edn encoding
   (require '[ednx.edn :refer [read-edn]])
   (-> s pr-str read-edn)
+
+  (-> s pr-str)
+
+  (remove-nil-values {:x 3 :y nil :z false :a true})
+  {:x 3
+   :y nil}
+
+  
+
 
 ;; test transit encoding
   (require '[transit.io :refer [encode decode]])

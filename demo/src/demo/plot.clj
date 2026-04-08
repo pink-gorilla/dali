@@ -1,14 +1,43 @@
 (ns demo.plot
   (:require
    [dali.spec :refer [create-dali-spec]]
-   [dali.store :refer [write]]))
+   [dali.store.file.transit] ; side effects
+   ))
 
-(defn employee
-  [dali-store v]
+(defn set-url [data url]
+  (let [data (or data {})]
+    (assoc data :load {:url url})))
+  
+
+(defn employee [v]
   (create-dali-spec
    {:viewer-fn 'demo.viewer/employee
     :transform-fn 'dali.transform.load/load-transit
-    :data (write dali-store "transit-json" v)}))
+    :store-format :transit-json
+    :store-data v
+    :store-set-url set-url}))
+
+
+(comment 
+  
+
+  (require '[dali.store.file :refer [create-dali-file-store]])
+  (def s (create-dali-file-store {:fpath ".gorilla/public/dali-tap"
+                                  :rpath "/r/dali-tap"}))
+  (def e (employee {:name "Walter" :salary 5000}))
+  e
+  (type e)
+  
+  (require '[dali.store :refer [store-data]])
+  (def e2 (store-data s e))
+  (type e2)
+  e2
+  
+  
+  
+
+ ;
+  )
 
 
 
