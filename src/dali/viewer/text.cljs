@@ -9,16 +9,15 @@
 
 (defn text
   "Render text (as string) to html
-     works with \\n (newlines)
-     Needed because \\n is meaningless in html"
-  [{:keys [class style text]
-    :or {style {:overflow-y "scroll"}
-         class "w-full h-full"}}]
+   works with \\n (newlines)
+   Needed because \\n is meaningless in html"
+  [{:keys [class style text]}]
   (let [lines (str/split text #"\n")]
     (into [:div {:class class
                  :style style}]
           (map line-with-br lines))))
 
 (defn text-exception [data]
-  [text {:class "bg-red-200 w-full h-full"
+  [text {:style {:backgroundColor "red"
+                 :width "100%"}
          :text data}])

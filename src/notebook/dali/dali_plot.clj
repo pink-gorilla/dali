@@ -4,14 +4,21 @@
    [dali.plot.exception :refer [exception]]
    [dali.plot.hiccup :refer [hiccup]]
    [dali.plot.image :refer [image]]
+   [dali.plot.text :refer [text]]
    [dali.plot.collection :refer [collection]])
   (:import
    javax.imageio.ImageIO))
 
+
+(text {:style {:color "blue"
+               :backgroundColor "yellow"
+               :margin "10px"
+               :border "1px solid black"}
+       :text "Hello, \r\nworld!"})
+
 ;; 
 ;; test plotting an image
 ;; 
-
 
 (def sun-img
   (ImageIO/read (io/resource "demodata/sun.png")))
@@ -22,8 +29,17 @@
 ;; plot a collection of dali-specs
 ;;
 
+(collection 
+ {:style {:border "1px solid green"
+          :margin "10px"
+          :display "grid"
+          :gridTemplateColumns "1fr 1fr 1fr 1fr 1fr"}
+  :children (range 10)
+  })
+
+
 (collection
- {:class "grid"
+ {:class "grid" ; grid will show 1-3 columns depending on the width of the notebook.
   :style {:border "1px solid black"
               ;  :background-color "blue"
                 ;:height "100px"

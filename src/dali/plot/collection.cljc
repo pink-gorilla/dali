@@ -2,13 +2,24 @@
   (:require
    [dali.spec :refer [create-dali-spec dali-spec?]]))
 
+(defn default-style [{:keys [width height overflow-y] :as style}]
+  (merge
+   style
+   {:width (or width "100%")
+    ;:height (or height "600px")
+    ;:overflow-y (or overflow-y "scroll")
+    }))
+
 (defn collection
-  "Renders children inside a dali-collection layout wrapper."
-  [opts & children]
-  (let [[opts children] (if (dali-spec? opts)
-                          [{} (concat [opts] children)]
-                          [opts children])]
+  "Renders children inside a dali-collection layout wrapper.
+   children can be passed either via :childrens in opts or
+   as additional parameters children2). priority: children"
+  [{:keys [children style _class] :as opts} & children2]
+  (let [[opts children2] (if (dali-spec? opts)
+                           [{} (concat [opts] children2)]
+                           [opts children2])
+        children (or children children2)]
     (create-dali-spec
      {:viewer-fn 'dali.viewer.hiccup/hiccup
-      :data [:div.dali-collection opts]
+      :data [:div.dali-collection (assoc opts :style (default-style style))]
       :children (into [] children)})))

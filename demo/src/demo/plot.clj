@@ -1,8 +1,9 @@
 (ns demo.plot
   (:require
    [dali.spec :refer [create-dali-spec]]
-   [dali.store.file.transit] ; side effects
+   [dali.store.file.transit] ; side effects 
    ))
+
 
 (defn set-url [data url]
   (let [data (or data {})]
@@ -17,7 +18,6 @@
     :store-data v
     :store-set-url set-url}))
 
-
 (comment 
   
 
@@ -28,14 +28,15 @@
   e
   (type e)
   
-  (require '[dali.store :refer [store-data]])
+  (require '[dali.store :refer [store-data open]])
   (def e2 (store-data s e))
   (type e2)
   e2
-  
-  
-  
+  "/r/dali-tap/yvZJO..transit.json"
+  (open s {:fmt :transit-json 
+           :filename "/yvZJO..transit.json"})
 
+; .gorilla/public/dali-tap/r/dali-tap/yvZJO..transit.json 
  ;
   )
 
