@@ -9,6 +9,7 @@
    [page match]])
 
 (def routes
-  [["/" {:name 'demo.page/page}]
+  [["/" {:name 'demo.page.main/page}]
+   ["/error" {:name 'demo.page.error/page}]
    ["/dali/tap" {:name 'dali.flowy.tap/page}]])
 

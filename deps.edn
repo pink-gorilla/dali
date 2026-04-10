@@ -6,6 +6,8 @@
   babashka/fs {:mvn/version "0.5.22"}
   org.pinkgorilla/timbre {:mvn/version "0.0.8"}
   funcool/promesa {:mvn/version "11.0.674"}
+  com.pitch/uix.core {:mvn/version "1.4.3"}
+  com.pitch/uix.dom {:mvn/version "1.4.3"}
   org.clojure/data.codec {:mvn/version "0.1.1"} ; image base64 encoding
   org.pinkgorilla/edn-x {:mvn/version "0.1.4"}
   org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"}

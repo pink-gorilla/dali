@@ -1,17 +1,19 @@
 (ns dali.viewer
   (:require
-   [taoensso.timbre :refer-macros [info warn error]]
+   [taoensso.timbre :refer-macros [debug info warn error]]
    [promesa.core :as p]
    [reagent.core :as r]
    ["react" :as react]
    [dali.util.resolve :refer [resolve-symbol]]
-   [dali.viewer.hiccup]))
+   [dali.viewer.hiccup]
+   [dali.error-boundary :refer [error-boundary-reagent]]
+   ))
 
 (defn transform-data [transform-fn data]
-  (info "transforming: " transform-fn " data: " data)
+  (debug "transforming: " transform-fn " data: " data)
   (-> (resolve-symbol transform-fn)
       (p/then (fn [transform]
-                (info "transform-fn resolve success. Now transforming.")
+                (debug "transform-fn resolve success. Now transforming.")
                 (transform data)))))
 
 (defn process
@@ -26,14 +28,14 @@
       (-> (p/all [viewer-p
                   (transform-data transform-fn data)])
           (p/then (fn [[viewer data]]
-                    (info "data successfully transformed.")
+                    (debug "data successfully transformed.")
                     ;(info "data successfully transformed to:  " data)
                     {:viewer viewer
                      :data data}))
           (p/catch (fn [err]
-                     (error "dali-viewer resolve-transform error: " err)
+                     (error "dali-viewer " viewer-fn " resolve-transform error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
-                      :data [:p "error in viewer-transform-resolve"]})))
+                      :data [:p (str "dali-viewer " viewer-fn " resolve-transform error: " err)]})))
 
       (-> viewer-p
           (p/then (fn [viewer]
@@ -41,9 +43,9 @@
                      :data data
                      :children children}))
           (p/catch (fn [err]
-                     (error "dali-viewer resolve error: " err)
+                     (error "dali-viewer " viewer-fn  " resolve error: " err)
                      {:viewer dali.viewer.hiccup/hiccup
-                      :data [:p "error in viewer-resolve"]}))))))
+                      :data [:p (str "dali-viewer " viewer-fn " resolve error")]}))))))
 
 (defn viewer
   "the viewer renders a dali-spec in the browser. 
@@ -78,10 +80,10 @@
     (react/useEffect
      (fn []
        (set-result nil)
-       (info "processing dali-spec: " dali-spec)
+       (debug "processing dali-spec: " dali-spec)
        (->  (process dali-spec)
             (p/then (fn [result]
-                      (info "processing dali-spec success!")
+                      (debug "processing dali-spec success!")
                       (set-result result)))
             (p/catch (fn [err]
                        (info "processing dali-spec error!")
@@ -109,13 +111,13 @@
           (let [{:keys [viewer data error children]} result]
             (if data
               ; data
-              (do (println "data viewer:" data " children:" children)
+              (do (debug "data viewer:" data " children:" children)
                   (if children
                     (let [v  [viewer data (->> children
                                                (map (fn [child]
                                                       [viewer2 child]))
                                                (into []))]]
-                      (println "collection viewer:" (pr-str v))
+                      (debug "collection viewer:" (pr-str v))
                       v)
                     [viewer data]))
 
@@ -127,9 +129,15 @@
           [:p "loading.."])))
      #js [result])))
 
-(defn viewer2 [dali-spec]
+(defn viewer1 [dali-spec]
   (let [dali-spec-js #js [dali-spec]]
     [:f> viewer-impl dali-spec dali-spec-js]))
+
+;(def viewer2 viewer1)
+
+(defn viewer2 [dali-spec]
+  [error-boundary-reagent
+   [viewer1 dali-spec]])
 
 #_(defn viewer2 [dali-spec]
     [:> viewer-impl dali-spec])

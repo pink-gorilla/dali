@@ -14,7 +14,7 @@
                                              "missionary-sci"}}}
             :exec-args {:profile "npm-install"}}
            
-           :demo
+           :watch
            {:exec-fn modular.system/start!
             :exec-args {:profile "watch"
                         :version "watch"

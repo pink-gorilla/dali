@@ -1,5 +1,6 @@
 (ns dali.flowy
   (:require
+   [taoensso.timbre :refer-macros [info warn error]]
    [missionary.core :as m]
    [reagent.core :as r]
    [flowy.reflower :refer [task flow]]
@@ -12,26 +13,26 @@
                fun-args-a (atom nil)
                dispose! (fn []
                           (when @dispose-a
-                            (println "disposing old flow.")
+                            (info "disposing old flow.")
                             (@dispose-a)))]
     (when-not (= fun-args @fun-args-a)
       (reset! fun-args-a fun-args)
       (dispose!)
       (let [f (apply flow fun-args)
-            _ (println "flow->ratom SUBSCRIBE " fun-args)
+            _ (info "flow->ratom SUBSCRIBE " fun-args)
             task (m/reduce (fn [_r v]
                              ;(println "flow->ratom VALUE: " v)
                              (reset! a v)
                              v) :waiting f)
             dispose! (task
-                      #(println "flow->ratom completed:  " %)
-                      #(println "flow->ratom error: " %))]
+                      #(info "flow->ratom completed:  " %)
+                      #(info "flow->ratom error: " %))]
         (reset! dispose-a dispose!)))
     (if (= :waiting @a)
       [:div "dali-flow-viewer waiting for data"]
       [viewer2 @a])
     (finally
-      (println "Cleanup: stopping flow!")
+      (info "Cleanup: stopping flow!" fun-args)
       (dispose!))))
 
 (defn dali-task-viewer [& fun-args]
@@ -40,22 +41,22 @@
                dispose-a (atom nil)
                dispose! (fn []
                           (when @dispose-a
-                            (println "disposing old task.")
+                            (info "disposing old task.")
                             (@dispose-a)))]
     (when-not (= fun-args @fun-args-a)
       (reset! fun-args-a fun-args)
       (dispose!)
       (let [t (apply task fun-args)
-            _ (println "task->ratom exec" fun-args)
+            _ (info "task->ratom exec" fun-args)
             task (m/sp
                   (let [v (m/? t)]
-                    (println "task->ratom VALUE: " v)
+                    (info "task->ratom VALUE: " v)
                     (reset! a {:data v})
                     v))
             dispose! (task
-                      #(println "task->ratom completed. value: " %)
+                      #(info "task->ratom completed. value: " %)
                       (fn [err]
-                        (println "task->ratom crashed: " err)
+                        (info "task->ratom crashed: " err)
                         (reset! a {:error err})))]
         (reset! dispose-a dispose!)))
       ; ui      
@@ -67,5 +68,5 @@
       :else
       [viewer2 (:data @a)])
     (finally
-      (println "Cleanup: stopping dali-task-viewer!")
+      (info "Cleanup: stopping dali-task-viewer!")
       (dispose!))))

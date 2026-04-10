@@ -1,10 +1,11 @@
 (ns dali.encoding.config
   (:require
+   [taoensso.timbre :refer-macros [debug info warn error]]
    [ednx.tick.edn :refer [add-tick-edn-handlers!]]
    [dali.spec :refer [add-spec-edn-handlers! add-spec-transit-handlers!]]))
 
 (defn start-encoding [_config]
-  (println "adding dali encoding..")
+  (info "adding dali-spec edn/transit encoding..")
   (add-tick-edn-handlers!)
   (add-spec-edn-handlers!)
   (add-spec-transit-handlers!)
