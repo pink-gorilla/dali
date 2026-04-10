@@ -29,7 +29,11 @@
 ;; plot a collection of dali-specs
 ;;
 
-(collection 
+
+;; this deos not work, as the children are not dali-specs.
+;; however, it should be catched by the error-boundary and shown as an error.
+;; this does not work either; why?
+#_(collection 
  {:style {:border "1px solid green"
           :margin "10px"
           :display "grid"
