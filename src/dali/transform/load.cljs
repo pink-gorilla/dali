@@ -3,7 +3,7 @@
    [taoensso.timbre :refer-macros [info warn error]]
    [promesa.core :as p]
    [ajax.core :as ajax]
-   [clojure.edn :as edn]
+   [ednx.edn :refer [read-edn]]
    [transit.cljs-ajax :as transit-ajax]))
 
 (defn wrap-promise
@@ -21,18 +21,13 @@
   ([url] (GET url {}))
   ([url params] (wrap-promise ajax/GET url params)))
 
-(defn parse-edn [s]
-  (if (string? s)
-    (edn/read-string s)
-    s))
-
 (defn load-edn [{:keys [url] :as opts}]
   (info "loading edn from url: " url " opts: " opts)
   (let [load-promise (GET url)]
     (-> load-promise
         (p/then (fn [data]
                   (info "url " url " loaded successfully. ")
-                  (parse-edn data)))
+                  (read-edn data)))
         (p/catch (fn [err]
                    (error "could not load edn from url " url " err: " err))))))
 
