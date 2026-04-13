@@ -5,7 +5,8 @@
    ["react" :as react]
    [reagent.ratom]
    ;[shadow.esm :as esm]
-   ["use-sync-external-store/shim" :refer [useSyncExternalStore]]))
+   ;["use-sync-external-store/shim" :refer [useSyncExternalStore]]
+   ))
 
 ;; a type for wrapping react/useState to support reset! and swap!
 (deftype WrappedState [st]
@@ -115,7 +116,7 @@
     (WrappedState. #js[@!state update-fn])))
 
 (defn use-sync-external-store [subscribe get-snapshot]
-  (useSyncExternalStore subscribe get-snapshot))
+  (react/useSyncExternalStore subscribe get-snapshot))
 
 (defn use-watch
   "Hook for reading value of an IWatchable. Compatible with reading Reagent reactions non-reactively."
