@@ -4,13 +4,15 @@
                   demo.page.main
                   demo.page.error
                   demo.person
-                  demo.viewer]
+                  demo.viewer
+                  demo.error]
  :cljs/ns-bindings {'demo.app {'routes demo.app/routes
                                'wrap demo.app/wrap}
                     'demo.page.main {'page demo.page.main/page} ; page routing
                     'demo.page.error {'page demo.page.error/page} ; page routing
                     'demo.person {'person demo.person/person} ; viewer resolution
-                    'demo.viewer {'employee demo.viewer/employee}}
+                    'demo.viewer {'employee demo.viewer/employee}
+                    'demo.error {'bad-component demo.error/bad-component}}
 
  ; runtime 
  :cljs-routes-reitit demo.app/routes

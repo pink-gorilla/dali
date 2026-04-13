@@ -17,6 +17,12 @@
   ($ error-boundary
      ($ erroring-component)))
 
+(defn sub-component []
+  [:div 
+   [:h1 "sub-component title"]
+   [error-boundary-reagent [bad-component]]
+   [:p "sub component footer"]])
+
 (defn page [_]
   [:div 
    [:h1 "uix error boundary demo"]
@@ -26,4 +32,7 @@
    
    [:h2 "reagent"]
    [error-boundary-reagent  [bad-component] ]
+
+   [:h2 "sub component"]
+   [sub-component]
    ])

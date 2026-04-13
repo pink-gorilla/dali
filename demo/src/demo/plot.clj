@@ -9,6 +9,12 @@
    {:viewer-fn 'demo.viewer/employee
     :data v}))
 
+
+(defn bad []
+  (create-dali-spec
+   {:viewer-fn 'demo.error/bad-component
+    :data 42}))
+
 (comment
 
   (require '[dali.store.file :refer [create-dali-file-store]])

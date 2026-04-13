@@ -1,4 +1,4 @@
-(ns demo.tap
+(ns dev.tap
   (:require
    [dali.plot.exception :refer [exception]]
    [dali.plot.hiccup :refer [hiccup]]
@@ -7,7 +7,11 @@
    ; impl
    [dali.store.file :refer [open-file]]
    [demo.service.saying :refer [saying]]
-   [demo.service.employee :refer [best-employee]]))
+   [demo.service.employee :refer [best-employee]]
+   [demo.plot :refer [bad employee]]
+   ; side-effects
+   [dali.type.clj]
+   [dali.type.image]))
 
 ; run: clj -X:jetty
 ; goto browser on port 8080 and click on tap-viewer
@@ -29,7 +33,6 @@
 
 (tap> (exception (ex-info "more data needed" {:x 3 :a "test"})))
 
-
 (tap> (collection
        {:class "grid"
         :style {:border "1px solid black"
@@ -46,4 +49,22 @@
        (hiccup [:p "456"])
        (hiccup [:p "789"])))
 
+(tap>
+ (collection
+  {:style {:border "1px solid green"
+           :margin "10px"
+           :display "grid"
+           :gridTemplateColumns "1fr 1fr 1fr"
+           :width "20em"}
+   :children (range 10)}))
 
+(tap>
+ (collection
+  {:style {:border "1px solid green"
+           :margin "10px"
+           :display "grid"
+           :gridTemplateColumns "1fr 1fr 1fr"
+           :width "20em"}
+   :children [(employee {:name "Walter" :salary 5000})
+              (bad)
+              (employee {:name "Willy" :salary 5000})]}))

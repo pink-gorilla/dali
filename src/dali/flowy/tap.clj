@@ -4,7 +4,9 @@
    [taoensso.timbre :refer [info]]
    [dali.spec :refer [dali-spec?]]
    [dali.store.file :refer [create-dali-file-store]]
-   [dali.store :refer [store-data]]))
+   [dali.store :refer [store-data]]
+   [dali.type.converter :refer [type->dali]]
+   ))
 
 (def tap-flow
   (m/stream
@@ -21,7 +23,8 @@
 
 (defn listen []
   (m/eduction
-   (filter dali-spec?)
+   ;(filter dali-spec?)
+   (map type->dali)
    (map (fn [dali-spec] (store-data s dali-spec)))
    tap-flow))
 

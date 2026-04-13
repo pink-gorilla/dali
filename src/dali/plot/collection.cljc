@@ -1,6 +1,8 @@
 (ns dali.plot.collection
   (:require
-   [dali.spec :refer [create-dali-spec dali-spec?]]))
+   [dali.spec :refer [create-dali-spec dali-spec?]]
+    [dali.type.converter :refer [type->dali]]
+   ))
 
 (defn default-style [{:keys [width height overflow-y] :as style}]
   (merge
@@ -18,7 +20,8 @@
   (let [[opts children2] (if (dali-spec? opts)
                            [{} (concat [opts] children2)]
                            [opts children2])
-        children (or children children2)]
+        children (or children children2)
+        children (map type->dali children)]
     (create-dali-spec
      {:viewer-fn 'dali.viewer.hiccup/hiccup
       :data [:div.dali-collection (assoc opts :style (default-style style))]

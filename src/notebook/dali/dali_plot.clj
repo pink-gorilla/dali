@@ -9,7 +9,6 @@
   (:import
    javax.imageio.ImageIO))
 
-
 (text {:style {:color "blue"
                :backgroundColor "yellow"
                :margin "10px"
@@ -25,22 +24,13 @@
 
 (image {:alt "sun"} sun-img)
 
-;;
-;; plot a collection of dali-specs
-;;
-
-
-;; this deos not work, as the children are not dali-specs.
-;; however, it should be catched by the error-boundary and shown as an error.
-;; this does not work either; why?
-#_(collection 
+(collection
  {:style {:border "1px solid green"
           :margin "10px"
           :display "grid"
-          :gridTemplateColumns "1fr 1fr 1fr 1fr 1fr"}
-  :children (range 10)
-  })
-
+          :gridTemplateColumns "1fr 1fr 1fr"
+          :width "20em"}
+  :children (range 10)})
 
 (collection
  {:class "grid" ; grid will show 1-3 columns depending on the width of the notebook.
