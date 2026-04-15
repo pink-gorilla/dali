@@ -45,8 +45,10 @@
  :cljs-service {:config-fn dali.encoding.config/config-encoding ; build  config
                 :start-fn dali.encoding.config/start-encoding} ; start cljs service
  
- :theme {:available  {:dali-collection {true ["dali-collection.css"]}}
-         :current {:dali-collection true}}
+ :theme {:available  {:dali-clj {true ["dali-clj.css"]}
+                      :dali-collection {true ["dali-collection.css"]}}
+         :current {:dali-clj true
+                   :dali-collection true}}
  
 
  
