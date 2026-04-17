@@ -9,4 +9,4 @@
 (extend-type BufferedImage
   dali-convertable
   (to-dali [v]
-    (image v {})))
+    (image {} v)))
