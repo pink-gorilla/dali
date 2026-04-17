@@ -2,7 +2,6 @@
   (:require
    [dali.spec :refer [create-dali-spec]]))
 
-
 (defn default-style [{:keys [width height overflow-y] :as style}]
   (merge
    style

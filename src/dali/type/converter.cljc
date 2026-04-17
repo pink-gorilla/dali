@@ -40,10 +40,9 @@
 
   (satisfies? dali-convertable (type 54))
 
-  (extends? dali-convertable (type ds))
-  (extends? dali-convertable (type (:a ds)))
-
-  (extends? dali-convertable (type 44))
+  ;(extends? dali-convertable (type ds))
+  ;(extends? dali-convertable (type (:a ds)))
+;  (extends? dali-convertable (type 44))
 
   (type ds)
 

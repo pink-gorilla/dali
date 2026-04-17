@@ -1,15 +1,26 @@
 (ns dali.plot.exception
   (:require
    [dali.spec :refer [create-dali-spec]]
-   [clj-service.response :refer [convert-ex]]))
+   #?(:clj [clj-service.response :refer [convert-ex]])))
 
-(defn exception
-  "returns a plot specification {:render-fn :spec :data}. 
+#?(:clj
+
+   (defn exception
+     "returns a plot specification {:render-fn :spec :data}. 
    The ui shows the exception."
-  [ex]
-  (create-dali-spec
-   {:viewer-fn 'dali.viewer.exception/exception-viewer
-    :data (convert-ex ex)}))
+     [ex]
+     (create-dali-spec
+      {:viewer-fn 'dali.viewer.exception/exception-viewer
+       :data (convert-ex ex)}))
+
+   :cljs
+   (defn exception
+     "returns a plot specification {:render-fn :spec :data}. 
+    The ui shows the exception."
+     [ex]
+     (create-dali-spec
+      {:viewer-fn 'dali.viewer.exception/exception-viewer
+       :data ex})))
 
 (comment
   (def ex (ex-info "asdf" {:y 3}))

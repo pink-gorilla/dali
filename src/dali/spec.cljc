@@ -59,8 +59,8 @@
 
 (defn prepare [x]
   ; store is excluded. 
-  (-> x 
-      (select-keys [:viewer-fn :transform-fn :data :children])    
+  (-> x
+      (select-keys [:viewer-fn :transform-fn :data :children])
       (remove-nil-values)))
 
 (def spec-serialization-handlers
@@ -80,9 +80,6 @@
 ; this is the side effect that we want to happen.
 (add-spec-transit-handlers!)
 
-
-
-
 (comment
   (def s (create-dali-spec {:viewer-fn 'dali.viewer.hiccup/hiccup
                             :data [:p "123"]}))
@@ -97,9 +94,6 @@
   (remove-nil-values {:x 3 :y nil :z false :a true})
   {:x 3
    :y nil}
-
-  
-
 
 ;; test transit encoding
   (require '[transit.io :refer [encode decode]])

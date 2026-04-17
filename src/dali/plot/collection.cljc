@@ -1,8 +1,7 @@
 (ns dali.plot.collection
   (:require
    [dali.spec :refer [create-dali-spec dali-spec?]]
-    [dali.type.converter :refer [type->dali]]
-   ))
+   [dali.type.converter :refer [type->dali]]))
 
 (defn default-style [{:keys [width height overflow-y] :as style}]
   (merge

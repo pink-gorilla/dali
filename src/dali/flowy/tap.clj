@@ -5,8 +5,7 @@
    [dali.spec :refer [dali-spec?]]
    [dali.store.file :refer [create-dali-file-store]]
    [dali.store :refer [store-data]]
-   [dali.type.converter :refer [type->dali]]
-   ))
+   [dali.type.converter :refer [type->dali]]))
 
 (def tap-flow
   (m/stream

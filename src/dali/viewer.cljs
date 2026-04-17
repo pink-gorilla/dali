@@ -6,8 +6,7 @@
    ["react" :as react]
    [dali.util.resolve :refer [resolve-symbol]]
    [dali.viewer.hiccup]
-   [dali.error-boundary :refer [error-boundary-reagent]]
-   ))
+   [dali.error-boundary :refer [error-boundary-reagent]]))
 
 (defn transform-data [transform-fn data]
   (debug "transforming: " transform-fn " data: " data)

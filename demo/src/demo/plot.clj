@@ -9,7 +9,6 @@
    {:viewer-fn 'demo.viewer/employee
     :data v}))
 
-
 (defn bad []
   (create-dali-spec
    {:viewer-fn 'demo.error/bad-component
