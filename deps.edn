@@ -13,7 +13,7 @@
   org.pinkgorilla/edn-x {:mvn/version "0.1.4"}
   org.pinkgorilla/transit-ajax {:mvn/version "0.1.11"}
   org.pinkgorilla/webserver {:mvn/version "0.2.75"} ; dali-cache
-  org.pinkgorilla/clj-service-flowy {:mvn/version "0.2.50"} ; clj interop
+  org.pinkgorilla/clj-service-flowy {:mvn/version "0.2.51"} ; clj interop
   org.pinkgorilla/css-theme {:mvn/version "0.1.13"} ; css themes
   }
  
